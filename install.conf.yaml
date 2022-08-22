@@ -1,0 +1,26 @@
+- defaults:
+    link:
+      relink: true
+
+- link:
+    ~/.config/nvim/init.lua:
+      path: .config/nvim/init.lua
+      force: true
+      create: true
+    ~/.gitconfig:
+      force: true
+    ~/.oh-my-zsh/custom/codespaces.zsh:
+      if: '[ "${CODESPACES}" = true ]'
+      path: oh-my-zsh/custom/codespaces.zsh
+      force: true
+    ~/.oh-my-zsh/custom/macos.zsh:
+      if: '[ `uname` = Darwin ]'
+      path: oh-my-zsh/custom/macos.zsh
+      force: true
+    ~/.tmux.conf:
+      force: true
+    ~/.zshrc:
+      force: true
+
+- shell:
+    - sudo chsh -s $(which zsh) $(whoami)
