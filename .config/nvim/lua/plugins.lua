@@ -4,7 +4,10 @@ if (not status) then
   return
 end
 
+-- vimscript commands can be run using vim.cmd
 vim.cmd [[packadd packer.nvim]]
+
+-- Lua plugins are installed with packer
 packer.startup(function(user)
   use 'wbthomason/packer.nvim'
   use {
@@ -32,4 +35,5 @@ packer.startup(function(user)
   use 'nvim-telescope/telescope-file-browser.nvim'
   use 'lewis6991/gitsigns.nvim'
   use 'kylechui/nvim-surround'
+  use 'ojroques/nvim-osc52' -- Yank from anywhere (even SSH) to and from the clipboard
 end)
