@@ -1,8 +1,37 @@
-local status, packer = pcall(require, 'packer')
-if (not status) then
-  print("Packer is not installed")
-  return
+-- install packer.nvim and plugins
+-- https://github.com/wbthomason/packer.nvim
+--
+-- :PackerCompile                    - Regenerate compiled loader file
+-- :PackerClean                      - Remove any disabled or unused plugins
+-- :PackerInstall                    - Clean, then install missing plugins
+-- :PackerUpdate                     - Clean, then update and install plugins
+-- :PackerSync                       - Perform `PackerUpdate` and then `PackerCompile`
+-- :PackerLoad completion-nvim ale   - Loads opt plugin immediately
+
+local execute = vim.api.nvim_command
+local fn = vim.fn
+local CURDIR = (...):match "(.-)[^%.]+$"
+
+local packer_init = false
+local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_init = true
+  vim.api.nvim_echo({ { "Installing packer.nvim", "Type" } }, true, {})
+  execute("!git clone --depth 1 https://github.com/wbthomason/packer.nvim " .. install_path)
+  execute "packadd packer.nvim"
 end
+
+local packer = require "packer"
+
+-- reload if this buffer changes
+vim.cmd [[
+  augroup packer_refresh
+  autocmd!
+  autocmd BufWritePost plugins.lua PackerClean
+  autocmd BufWritePost plugins.lua PackerInstall
+  autocmd BufWritePost plugins.lua PackerCompile
+  augroup END
+]]
 
 -- vimscript commands can be run using vim.cmd
 vim.cmd [[packadd packer.nvim]]
