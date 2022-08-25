@@ -3,8 +3,12 @@
       relink: true
 
 - link:
-    ~/.config/nvim/init.lua:
-      path: .config/nvim/init.lua
+    ~/.config/nvim:
+      path: .config/nvim
+      force: true
+      create: true
+    ~/tmux-powerline
+      path: tmux-powerline
       force: true
       create: true
     ~/.gitconfig:
