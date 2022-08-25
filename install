@@ -30,4 +30,4 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 
 echo "=== Installing Packer plugins for Neovim ==="
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-
+nvim --headless -c 'TSUpdate'
