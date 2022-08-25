@@ -15,9 +15,6 @@ local CURDIR = (...):match "(.-)[^%.]+$"
 local fn = vim.fn
 local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
-  -- vim.api.nvim_echo({ { "Installing packer.nvim", "Type" } }, true, {})
-  -- execute("!git clone --depth 1 https://github.com/wbthomason/packer.nvim " .. install_path)
-  -- execute "packadd packer.nvim"
   packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
     install_path })
   vim.cmd [[packadd packer.nvim]]
@@ -72,7 +69,12 @@ packer.startup(function(use)
   -- Automatically set up your configuration after cloning packer.nvim
   -- Must be after defining all plugins
   if packer_bootstrap then
-    vim.cmd [[packadd nvim-treesitter]] -- Should fix "module 'nvim-treesitter.configs' not found" errors when opening nvim
+    -- This is necessary, because it's possible that the treesitter module is not available
+    -- when installing the packages, or when opening vim and it tries to access the module.
+    -- So this fixes those "module 'nvim-treesitter.configs' not found" errors
+    vim.cmd [[packadd nvim-treesitter]]
+
+    -- I think this triggers packer to install the dependencies above.
     require('packer').sync()
   end
 end)
