@@ -2,7 +2,6 @@
 
 set -e
 
-
 if [[ "${CODESPACES:-}" == 'true' ]]; then
   echo "=== Installing neovim ==="
   sudo rm -rf /squashfs-root
@@ -28,4 +27,7 @@ git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+
+echo "=== Installing Packer plugins for Neovim ==="
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
