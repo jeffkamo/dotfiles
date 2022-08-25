@@ -21,7 +21,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
     install_path })
   vim.cmd [[packadd packer.nvim]]
-  vim.cmd [[packadd nvim-treesitter]] -- Should fix "module 'nvim-treesitter.configs' not found" errors when opening nvim
 end
 
 local packer = require "packer"
@@ -73,6 +72,7 @@ packer.startup(function(use)
   -- Automatically set up your configuration after cloning packer.nvim
   -- Must be after defining all plugins
   if packer_bootstrap then
+    vim.cmd [[packadd nvim-treesitter]] -- Should fix "module 'nvim-treesitter.configs' not found" errors when opening nvim
     require('packer').sync()
   end
 end)
