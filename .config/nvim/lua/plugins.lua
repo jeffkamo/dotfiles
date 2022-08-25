@@ -9,28 +9,21 @@
 -- :PackerLoad completion-nvim ale   - Loads opt plugin immediately
 
 local execute = vim.api.nvim_command
-local fn = vim.fn
 local CURDIR = (...):match "(.-)[^%.]+$"
 
-local packer_init = false
+-- Part 1 install and then run packer on startup
+local fn = vim.fn
 local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_init = true
-  vim.api.nvim_echo({ { "Installing packer.nvim", "Type" } }, true, {})
-  execute("!git clone --depth 1 https://github.com/wbthomason/packer.nvim " .. install_path)
-  execute "packadd packer.nvim"
+  -- vim.api.nvim_echo({ { "Installing packer.nvim", "Type" } }, true, {})
+  -- execute("!git clone --depth 1 https://github.com/wbthomason/packer.nvim " .. install_path)
+  -- execute "packadd packer.nvim"
+  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+    install_path })
+  vim.cmd [[packadd packer.nvim]]
 end
 
 local packer = require "packer"
-
--- Have packer use a popup window
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
-}
 
 -- reload if this buffer changes
 vim.cmd [[
@@ -46,7 +39,7 @@ vim.cmd [[
 vim.cmd [[packadd packer.nvim]]
 
 -- Lua plugins are installed with packer
-packer.startup(function(user)
+packer.startup(function(use)
   use 'wbthomason/packer.nvim'
   use {
     'svrana/neosolarized.nvim',
@@ -74,4 +67,11 @@ packer.startup(function(user)
   use 'lewis6991/gitsigns.nvim'
   use 'kylechui/nvim-surround'
   use 'ojroques/nvim-osc52' -- Yank from anywhere (even SSH) to and from the clipboard
+
+  -- Part 2 install and then run packer on startup...
+  -- Automatically set up your configuration after cloning packer.nvim
+  -- Must be after defining all plugins
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)
