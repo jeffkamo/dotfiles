@@ -16,6 +16,7 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 
 if [[ "${CODESPACES:-}" == 'true' ]]; then
   DEBIAN_FRONTNED=noninteractive sudo apt update -yq
-  DEBIAN_FRONTNED=noninteractive sudo apt install neovim tmux -yq
+  DEBIAN_FRONTNED=noninteractive sudo apt-get install neovim
+  DEBIAN_FRONTNED=noninteractive sudo apt install tmux -yq
 fi
 
