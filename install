@@ -2,6 +2,21 @@
 
 set -e
 
+
+if [[ "${CODESPACES:-}" == 'true' ]]; then
+  echo "=== Installing neovim ==="
+  sudo rm -rf /squashfs-root
+  curl -sSfLo  "${HOME}/tmp/nvim/nvim.appimage" --create-dirs https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  chmod u+x "${HOME}/tmp/nvim/nvim.appimage"
+  ${HOME}/tmp/nvim/nvim.appimage --appimage-extract 1>/dev/null
+  sudo mv squashfs-root /
+  sudo ln -sf /squashfs-root/AppRun /usr/bin/nvim
+
+  echo "=== Installing utilities ==="
+  sudo apt-get update
+  sudo apt-get install -y tmux
+fi
+
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
 
@@ -13,10 +28,4 @@ git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
-
-if [[ "${CODESPACES:-}" == 'true' ]]; then
-  DEBIAN_FRONTNED=noninteractive sudo apt update -yq
-  DEBIAN_FRONTNED=noninteractive sudo apt-get install neovim
-  DEBIAN_FRONTNED=noninteractive sudo apt install tmux -yq
-fi
 
