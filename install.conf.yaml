@@ -7,7 +7,7 @@
       path: .config/nvim
       force: true
       create: true
-    ~/tmux-powerline
+    ~/tmux-powerline:
       path: tmux-powerline
       force: true
       create: true
