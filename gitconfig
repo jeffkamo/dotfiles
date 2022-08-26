@@ -1,12 +1,11 @@
+; https://git-scm.com/docs/git-config
+[push]
+  default = current
 [user]
+  useConfigOnly = true
   name = Jeff Kamo
-  email = jeff.kamo@clio.com
-
-[github]
-  user = jeffkamo
-
-[url "git@github.com:clio"]
-  insteadOf = https://github.com/clio
+  email = admin@jeffkamo.com
+  ; email = jeff.kamo@clio.com
 [alias]
 	logline = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	logline2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
