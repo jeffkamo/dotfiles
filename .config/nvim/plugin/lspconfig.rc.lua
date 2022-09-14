@@ -1,5 +1,8 @@
+local status, lsp_installer = pcall(require, "nvim-lsp-installer")
 local status, nvim_lsp = pcall(require, 'lspconfig')
 if (not status) then return end
+
+lsp_installer.setup {}
 
 local protocol = require('vim.lsp.protocol')
 
