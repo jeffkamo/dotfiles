@@ -33,3 +33,6 @@ nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 echo "=== Installing ripgrep, a dependency of Telescope live-grep ==="
 sudo apt-get install ripgrep
+
+echo "== Installing prettierd, a dependency for my prettier setup ==="
+sudo npm install -g @fsouza/prettierd
