@@ -32,3 +32,9 @@ keymap.set('n', '<C-w><left>', '<C-w><')
 keymap.set('n', '<C-w><right>', '<C-w>>')
 keymap.set('n', '<C-w><up>', '<C-w>+')
 keymap.set('n', '<C-w><down>', '<C-w>-')
+
+-- Copy current file path to clipboard
+keymap.set('n', 'cp', '@*=expand("%")<Return>')
+
+-- Set "Y" to copy to end of line
+keymap.set('n', 'Y', 'y$')
