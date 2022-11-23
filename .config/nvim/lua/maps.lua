@@ -38,3 +38,6 @@ keymap.set('n', 'cp', '@*=expand("%")<Return>')
 
 -- Set "Y" to copy to end of line
 keymap.set('n', 'Y', 'y$')
+
+-- Diagnostics (ex. eslint messages, etc.)
+keymap.set('n', '<Space>e', vim.diagnostic.open_float, { noremap = true, silent = true })
