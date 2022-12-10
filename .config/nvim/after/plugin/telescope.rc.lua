@@ -42,29 +42,36 @@ telescope.setup {
 telescope.load_extension("file_browser")
 
 -- keymaps
-vim.keymap.set('n', ';f',
+-- Open find-by-file
+vim.keymap.set('n', '<Space>f',
   function()
     builtin.git_files({
       no_ignore = false,
       hidden = true
     })
   end)
-vim.keymap.set('n', ';r', function()
+-- Open find-by-regex
+vim.keymap.set('n', '<Space>r', function()
   builtin.live_grep()
 end)
+--- Open buffers
 vim.keymap.set('n', '\\\\', function()
   builtin.buffers()
 end)
-vim.keymap.set('n', ';t', function()
-  builtin.help_tags()
-end)
-vim.keymap.set('n', ';;', function()
+-- Open find-in-help (can't use as is, it conflicts with moving left through panes)
+-- vim.keymap.set('n', '<Space>h', function()
+--  builtin.help_tags()
+-- end)
+-- Open previous find window (resume!)
+vim.keymap.set('n', '<Space><Space>', function()
   builtin.resume()
 end)
-vim.keymap.set('n', ';e', function()
+-- Open find-in-diagnostics
+vim.keymap.set('n', '<Space>d', function()
   builtin.diagnostics()
 end)
-vim.keymap.set("n", "sf", function()
+-- Open find-in-browser
+vim.keymap.set("n", "<Space>b", function()
   telescope.extensions.file_browser.file_browser({
     path = "%:p:h",
     cwd = telescope_buffer_dir(),
