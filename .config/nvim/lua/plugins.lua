@@ -68,6 +68,7 @@ packer.startup(function(use)
   use 'lewis6991/gitsigns.nvim'
   use 'kylechui/nvim-surround'
   use 'ojroques/nvim-osc52' -- Yank from anywhere (even SSH) to and from the clipboard
+  use 'alexghergh/nvim-tmux-navigation' -- Use this for adding shared hotkeys to navigate between VIM/TMUX panes seemlessly
 
   -- Part 2 install and then run packer on startup...
   -- Automatically set up your configuration after cloning packer.nvim
