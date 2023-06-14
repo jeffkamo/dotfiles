@@ -3,6 +3,9 @@
       relink: true
 
 - link:
+    ~/.bash_profile:
+      path: .bash_profile
+      force: true
     ~/.config/nvim:
       path: .config/nvim
       force: true

@@ -18,16 +18,19 @@ if [[ "${CODESPACES:-}" == 'true' ]]; then
   sudo apt-get install -y tmux
 fi
 
+echo "=== Setting up dotbot configs ==="
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
 
 DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+echo "=== Installing dotbot as a git submodule ==="
 cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
+echo "=== Run install.conf.yaml ==="
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
 
 echo "=== Installing Packer plugins for Neovim ==="
