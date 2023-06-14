@@ -7,10 +7,11 @@ Installation managed by <a href="https://github.com/anishathalye/dotbot">dotbot<
 
 ## Before install
 
-Things like Neovim and TMUX Plugin Manager aren't currently configured to install automatically. Install those first.
+Things like Neovim, TMUX Plugin Manager, and ripgrep (used by Telescope for Live Grep) aren't currently configured to install automatically. Install those first.
 
 ```
 brew install neovim
+brew install ripgrep
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone https://github.com/tmux-plugins/tmux-sensible ~/.tmux/plugins/tmux-sensible
 ```
