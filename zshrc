@@ -1,17 +1,15 @@
 export ZSH="$HOME/.oh-my-zsh"
 
-# Paths I copied from other people
-export PATH="$HOME/Library/Python/2.7/bin:$PATH" # for the aws eb CLI
-export PATH="/usr/local/sbin:$PATH" # recommended by `brew doctor`
-export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
+# Custom paths
+export PATH="/opt/homebrew/bin:$PATH"
 
-# Paths to my node shim modules
-export PATH=$HOME/.nodenv/shims/typescript-language-server:$PATH
-export PATH=$HOME/.nodenv/versions/14.17.0/bin/prettierd:$PATH
+# Clio dev command stuff. Disable if the machine is not for Clio
+eval "$(dev _hook)"
 
-# Some ZSH stuff
+# Set ZSH configs
 ZSH_THEME="robbyrussell"
 source $ZSH/oh-my-zsh.sh
+
 # Make autocomplete more like Bash
 # http://serverfault.com/questions/109207/how-do-i-make-zsh-completion-act-more-like-bash-completion
 setopt noautomenu
