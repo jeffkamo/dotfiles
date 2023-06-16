@@ -1,6 +1,11 @@
 export ZSH="$HOME/.oh-my-zsh"
 
 # Custom paths
+export PATH="$HOME/Library/Python/2.7/bin:$PATH" # for the aws eb CLI
+export PATH="/usr/local/sbin:$PATH" # recommended by `brew doctor`
+export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
+export PATH=$HOME/.nodenv/shims/typescript-language-server:$PATH
+export PATH=$HOME/.nodenv/versions/14.17.0/bin/prettierd:$PATH
 export PATH="/opt/homebrew/bin:$PATH"
 
 # Clio dev command stuff. Disable if the machine is not for Clio
