@@ -1,8 +1,9 @@
 local status, lsp_installer = pcall(require, "nvim-lsp-installer")
+if (not status) then return end
+lsp_installer.setup {}
+
 local status, nvim_lsp = pcall(require, 'lspconfig')
 if (not status) then return end
-
-lsp_installer.setup {}
 
 local protocol = require('vim.lsp.protocol')
 
@@ -23,7 +24,7 @@ nvim_lsp.tsserver.setup {
   cmd = { "typescript-language-server", "--stdio" }
 }
 
-nvim_lsp.sumneko_lua.setup {
+nvim_lsp.lua_ls.setup {
   on_attach = on_attach,
   settings = {
     Lua = {
