@@ -8,6 +8,7 @@ export PATH=$HOME/.nodenv/shims/typescript-language-server:$PATH
 export PATH=$HOME/.nodenv/versions/14.17.0/bin/prettierd:$PATH
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 
 # Clio dev command stuff. Disable if the machine is not for Clio
 eval "$(dev _hook)"
