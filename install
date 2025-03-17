@@ -42,3 +42,6 @@ sudo apt-get install ripgrep
 echo "== Installing prettierd, a dependency for my prettier setup ==="
 # sudo npm install -g @fsouza/prettierd
 brew install fsouza/prettierd/prettierd
+
+echo "=== Installing other applications and utilities ==="
+brew install --cask alt-tab
