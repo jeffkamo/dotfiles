@@ -44,4 +44,4 @@ echo "== Installing prettierd, a dependency for my prettier setup ==="
 brew install fsouza/prettierd/prettierd
 
 echo "=== Installing other applications and utilities ==="
-brew install --cask alt-tab
+brew install --cask alt-tab # https://alt-tab-macos.netlify.app/
