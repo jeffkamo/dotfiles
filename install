@@ -45,3 +45,4 @@ brew install fsouza/prettierd/prettierd
 
 echo "=== Installing other applications and utilities ==="
 brew install --cask alt-tab # https://alt-tab-macos.netlify.app/
+brew install sequel-ace # https://sequel-ace.com/
