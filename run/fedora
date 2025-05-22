@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+dnf install hyprland
+dnf copr enable ghostty
+dnf install ghostty
+dnf install wofi
+dnf install waybar
+dnf install zsh
+dnf install neovim

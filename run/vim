@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "=== Installing Packer plugins for Neovim ==="
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+
+echo "=== Installing ripgrep, a dependency of Telescope live-grep ==="
+sudo apt-get install ripgrep

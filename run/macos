@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "== Installing prettierd, a dependency for my prettier setup ==="
+# sudo npm install -g @fsouza/prettierd
+brew install fsouza/prettierd/prettierd
+
+echo "=== Installing other applications and utilities ==="
+brew install --cask alt-tab # https://alt-tab-macos.netlify.app/
+brew install sequel-ace # https://sequel-ace.com/
+brew install --cask ghostty # https://formulae.brew.sh/cask/ghostty
+brew install --cask obsidian # https://formulae.brew.sh/cask/obsidian

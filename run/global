@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+## Note that ohmyzsh creates a backup of the current existing zshrc, if it exists
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+curl -s "https://get.sdkman.io" | bash

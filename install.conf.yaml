@@ -1,25 +1,22 @@
 - defaults:
     link:
       relink: true
+      create: true
+
+- clean: ['~', '~/.config']
 
 - link:
     ~/.bash_profile:
-      path: .bash_profile
+    ~/.bashrc:
+    ~/.config/ghostty:
+    ~/.config/hypr:
       force: true
     ~/.config/nvim:
-      path: .config/nvim
-      force: true
-      create: true
-    ~/tmux-powerline:
-      path: tmux-powerline
-      force: true
-      create: true
+    ~/.config/waybar:
     ~/.gitconfig:
-      force: true
     ~/.tmux.conf:
-      force: true
+    ~/tmux-powerline:
     ~/.zshrc:
-      force: true
 
-- shell:
-    - sudo chsh -s $(which zsh) $(whoami)
+# - shell:
+    # - chsh -s $(which zsh)

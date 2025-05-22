@@ -2,22 +2,6 @@
 
 set -e
 
-if [[ "${CODESPACES:-}" == 'true' ]]; then
-  echo "=== Installing neovim ==="
-  # installation instructions roughly follow the official Neovim instructions:
-  # https://github.com/neovim/neovim/wiki/Installing-Neovim#appimage-universal-linux-package
-  sudo rm -rf /squashfs-root
-  curl -sSfLo  "${HOME}/tmp/nvim/nvim.appimage" --create-dirs https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-  chmod u+x "${HOME}/tmp/nvim/nvim.appimage"
-  ${HOME}/tmp/nvim/nvim.appimage --appimage-extract 1>/dev/null
-  sudo mv squashfs-root /
-  sudo ln -sf /squashfs-root/AppRun /usr/bin/nvim
-
-  echo "=== Installing utilities ==="
-  sudo apt-get update
-  sudo apt-get install -y tmux
-fi
-
 echo "=== Setting up dotbot configs ==="
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
@@ -32,19 +16,3 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 
 echo "=== Run install.conf.yaml ==="
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
-
-echo "=== Installing Packer plugins for Neovim ==="
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-
-echo "=== Installing ripgrep, a dependency of Telescope live-grep ==="
-sudo apt-get install ripgrep
-
-echo "== Installing prettierd, a dependency for my prettier setup ==="
-# sudo npm install -g @fsouza/prettierd
-brew install fsouza/prettierd/prettierd
-
-echo "=== Installing other applications and utilities ==="
-brew install --cask alt-tab # https://alt-tab-macos.netlify.app/
-brew install sequel-ace # https://sequel-ace.com/
-brew install --cask ghostty # https://formulae.brew.sh/cask/ghostty
-brew install --cask obsidian # https://formulae.brew.sh/cask/obsidian
