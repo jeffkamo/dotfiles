@@ -7,3 +7,4 @@ dnf install wofi
 dnf install waybar
 dnf install zsh
 dnf install neovim
+dnf install gh
