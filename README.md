@@ -10,7 +10,12 @@ Installation managed by <a href="https://github.com/anishathalye/dotbot">dotbot<
 ./install
 ```
 
-Note that some symlinks may need to be run using `sudo` (i.e. the ones created in `/etc`).
+Note that some symlinks may need to be run using `sudo` (i.e. the ones created in `/etc`),
+in which case do this instead:
+
+```
+sudo ./install
+```
 
 ## After install
 
