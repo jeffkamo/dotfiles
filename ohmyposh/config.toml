@@ -18,29 +18,22 @@ final_space = true
   newline = true
 
   [[blocks.segments]]
-    template = '{{ .Path }}'
+    template = ' {{ .Path }}'
     foreground = 'blue'
     background = 'transparent'
     type = 'path'
     style = 'plain'
-    # leading_diamond = " "
-    # trailing_diamond = ""
 
     [blocks.segments.properties]
       cache_duration = 'none'
       style = 'full'
 
   [[blocks.segments]]
-    template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
+    template = '  {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
     foreground = 'p:grey'
     background = 'transparent'
-    # foreground = 'black'
-    # background = 'red'
     type = 'git'
     style = 'plain'
-    # style = 'diamond'
-    # leading_diamond = " "
-    # trailing_diamond = ""
 
     [blocks.segments.properties]
       branch_icon = ''
