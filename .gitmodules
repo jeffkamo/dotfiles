@@ -11,3 +11,6 @@
 [submodule "tmux-sensible"]
 	path = tmux-sensible
 	url = https://github.com/tmux-plugins/tmux-sensible
+[submodule "zsh-autocomplete"]
+	path = zsh-autocomplete
+	url = https://github.com/marlonrichert/zsh-autocomplete.git

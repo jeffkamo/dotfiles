@@ -72,8 +72,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
+source $HOME/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # User configuration
 
@@ -134,6 +133,7 @@ export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin/:$PATH"
 
 # == PERSONAL SETUP ==
+# source $ZSH/oh-my-zsh.sh
 # eval "$(starship init zsh)" # @url: https://starship.rs/
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 

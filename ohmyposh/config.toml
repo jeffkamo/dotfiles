@@ -23,6 +23,8 @@ final_space = true
     background = 'transparent'
     type = 'path'
     style = 'plain'
+    # leading_diamond = " "
+    # trailing_diamond = ""
 
     [blocks.segments.properties]
       cache_duration = 'none'
@@ -32,8 +34,13 @@ final_space = true
     template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
     foreground = 'p:grey'
     background = 'transparent'
+    # foreground = 'black'
+    # background = 'red'
     type = 'git'
     style = 'plain'
+    # style = 'diamond'
+    # leading_diamond = " "
+    # trailing_diamond = ""
 
     [blocks.segments.properties]
       branch_icon = ''

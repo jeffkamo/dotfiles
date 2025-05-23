@@ -25,6 +25,7 @@
     ~/.tmux/plugins/tmux-sensible:
     ~/tmux-powerline:
     ~/.zshrc:
+    ~/.zsh/plugins/zsh-autocomplete:
 
 # - shell:
     # - chsh -s $(which zsh)
