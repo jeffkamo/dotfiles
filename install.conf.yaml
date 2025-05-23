@@ -6,6 +6,7 @@
 - clean: ['~', '~/.config']
 
 - link:
+    ~/.config/backgrounds:
     ~/.bash_profile:
     ~/.bashrc:
     ~/.config/ghostty:
