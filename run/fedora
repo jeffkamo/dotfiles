@@ -5,6 +5,7 @@ dnf install hyprland # for tiling window system
 dnf copr enable solopasha/hyprland # required to access some hyprland dnf modules
 dnf install hyprshot # for screenshots
 dnf install hyprlock # for locking the screen
+dnf install hypridle # for locking the screen when idle
 dnf install waybar # for hyprland top bar module
 def install swaync # for notification center. Gets notifications from Gnome's lib-notify
 dnf copr enable ghostty
