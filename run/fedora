@@ -13,6 +13,9 @@ dnf copr enable ghostty
 dnf install ghostty # for my terminal emulator of choice
 dnf install wofi # for spotlight-like search menu
 dnf install zsh
+dnf install starship
+dnf copr enable chronoscrat/oh-my-posh
+dnf install --refresh oh-my-posh
 dnf install neovim
 dnf install gh
 

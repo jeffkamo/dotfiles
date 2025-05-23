@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-echo "=== Installing ohmyzsh ==="
+# echo "=== Installing ohmyzsh ==="
 # Note that ohmyzsh creates a backup of the current existing zshrc, if it exists
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# NOTE: ohmyzsh is currently disabled in favor of Starship
 
 echo "=== Installing sdkman ==="
 # Note: I think this required for... probably TMUX customization/plugins?

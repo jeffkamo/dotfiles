@@ -2,7 +2,8 @@
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
+# NOTE: This is current commented out in favor of Starship
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -114,9 +115,6 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 
-# Clio dev command stuff. Disable if the machine is not for Clio
-# eval "$(dev _hook)"
-
 # Make autocomplete more like Bash
 # http://serverfault.com/questions/109207/how-do-i-make-zsh-completion-act-more-like-bash-completion
 setopt noautomenu
@@ -126,11 +124,18 @@ setopt nomenucomplete
 export EDITOR='nvim'
 alias vim='nvim'
 
-# == CLIO_ANDROID_SETUP ==
+# == CLIO_DEV_SETUP ==
+# Clio dev command stuff. Disable if the machine is not for Clio
+# eval "$(dev _hook)"
 
+# == CLIO_ANDROID_SETUP ==
 # Android PATHs
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin/:$PATH"
+
+# == PERSONAL SETUP ==
+# eval "$(starship init zsh)" # @url: https://starship.rs/
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

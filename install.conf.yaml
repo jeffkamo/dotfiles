@@ -18,6 +18,8 @@
     /etc/keyd/default.conf:
       # This one might have be to run with sudo
       path: "keyd/default.conf"
+    ~/.config/ohmyposh:
+    ~/.config/starship:
     ~/.tmux.conf:
     ~/.tmux/plugins/tpm:
     ~/.tmux/plugins/tmux-sensible:
