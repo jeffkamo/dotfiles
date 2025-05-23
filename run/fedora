@@ -2,6 +2,8 @@
 
 echo "=== Installing DNF Packages ==="
 dnf install hyprland
+dnf copr enable solopasha/hyprland # required to access hyprland dnf modules
+dnf install hyprshot
 dnf copr enable ghostty
 dnf install ghostty
 dnf install wofi
