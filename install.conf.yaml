@@ -14,7 +14,12 @@
     ~/.config/nvim:
     ~/.config/waybar:
     ~/.gitconfig:
+    /etc/keyd/default.conf:
+      # This one might have be to run with sudo
+      path: "keyd/default.conf"
     ~/.tmux.conf:
+    ~/.tmux/plugins/tpm:
+    ~/.tmux/plugins/tmux-sensible:
     ~/tmux-powerline:
     ~/.zshrc:
 

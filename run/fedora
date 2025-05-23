@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+echo "=== Installing DNF Packages ==="
 dnf install hyprland
 dnf copr enable ghostty
 dnf install ghostty
@@ -8,3 +9,19 @@ dnf install waybar
 dnf install zsh
 dnf install neovim
 dnf install gh
+
+# This is for programming keyboard keys, like making
+# CapsLock both Esc and Ctrl, a combination which is
+# not possible using hyprland's XKB settings alone.
+# See `keyd/default.conf`
+# file for my custom configurations.
+# @url: https://github.com/rvaiya/keyd
+mkdir /etc/keyd
+dnf copr enable alternateved/keyd
+dnf install keyd
+systemctl enable --now keyd
+# Run `systemctl status keyd` to see the daemon status.
+# Run `journalctl -eu keyd` to see the logs.
+#
+# Note: Changes to the config might not be recognized
+# until a `sudo keyd reload` is performed.
