@@ -74,6 +74,9 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 source $HOME/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
+# ZSH autocomplete customizations
+zstyle ':autocomplete:*' delay 1  # seconds (float)
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
