@@ -32,6 +32,15 @@ flatpak override --filesystem=$HOME/.icons # Override flatpak icons to ~/.icons:
 flatpak override --user --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/.config/gtk-4.0 locally:
 flatpak override --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/.config/gtk-4.0 globally:
 
+# This is a fix for getting my cursor theme to work. The
+# usual advice was not work (ex. use Gnome Tweaks to set
+# the cursor theme). So instead, I'm doing it via a combo
+# of hyprland configuration plus the following command.
+# This trick courtesy of:
+# @url: https://bbs.archlinux.org/viewtopic.php?id=302459
+echo "=== Fix and apply cursor theme via Hyprland ==="
+hyprctl setcursor Bibata-Modern-Classic 24
+
 # This is for programming keyboard keys, like making
 # CapsLock both Esc and Ctrl, a combination which is
 # not possible using hyprland's XKB settings alone.

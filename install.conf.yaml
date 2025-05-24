@@ -21,6 +21,7 @@
       # This one might have be to run with sudo
       path: "keyd/default.conf"
     ~/.gitconfig:
+    ~/.icons:
     ~/.themes:
     ~/.tmux.conf:
     ~/.tmux/plugins/tpm:
