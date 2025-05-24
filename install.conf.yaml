@@ -14,21 +14,22 @@
     ~/.config/gtk-4.0:
     ~/.config/hypr:
     ~/.config/nvim:
-    ~/.config/waybar:
     ~/.config/ohmyposh:
     ~/.config/starship:
-    /etc/keyd/default.conf:
-      # This one might have be to run with sudo
-      path: "keyd/default.conf"
+    ~/.config/waybar:
+    ~/.config/wofi:
     ~/.gitconfig:
     ~/.icons:
     ~/.themes:
     ~/.tmux.conf:
-    ~/.tmux/plugins/tpm:
     ~/.tmux/plugins/tmux-sensible:
-    ~/tmux-powerline:
+    ~/.tmux/plugins/tpm:
     ~/.zshrc:
     ~/.zsh/plugins/zsh-autocomplete:
+    ~/tmux-powerline:
+    /etc/keyd/default.conf:
+      # This one might have be to run with sudo
+      path: "keyd/default.conf"
 
 # - shell:
     # - chsh -s $(which zsh)

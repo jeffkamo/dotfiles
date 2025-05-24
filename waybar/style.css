@@ -1,4 +1,4 @@
-@import "mocha.css"; 
+@import "kanagawa.css"; /* actually Kanagawa */
 
 * {
     font-family: "MesloLGS Nerd Font Mono Bold";
@@ -30,8 +30,8 @@ button {
 
 button:hover {
     background: inherit;
-    color: @mauve;
-    border-top: 2px solid @mauve;
+    color: @red;
+    border-top: 2px solid @red;
 }
 
 #workspaces button {
@@ -39,19 +39,21 @@ button:hover {
 }
 
 #workspaces button.focused {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: @rosewater;
-    border-top: 2px solid @rosewater;
+    /* background-color: rgba(0, 0, 0, 0.3); */
+    background-color: @black;
+    color: @text;
+    border-top: 2px solid @text;
 }
 
 #workspaces button.active {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: @mauve;
-    border-top: 2px solid @mauve;
+    /* background-color: rgba(0, 0, 0, 0.3); */
+    background-color: @black;
+    color: @red;
+    border-top: 2px solid @red;
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
+    background-color: @red;
 }
 
 #pulseaudio,
@@ -81,8 +83,8 @@ button:hover {
 }
 
 #clock.date {
-    color: @mauve;
-    border-bottom: 2px solid @mauve;
+    color: @red;
+    border-bottom: 2px solid @red;
 }
 
 #pulseaudio {
@@ -97,7 +99,7 @@ button:hover {
 
 #idle_inhibitor {
     margin-right: 12px;
-    color: #7cb342;
+    color: @green;
 }
 
 #idle_inhibitor.activated {
@@ -120,7 +122,7 @@ button:hover {
 }
 
 #custom-vpn {
-    color: @lavender;
+    color: @pink;
     border-radius: 15px;
     padding-left: 6px;
     padding-right: 6px;
