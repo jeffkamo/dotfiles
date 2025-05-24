@@ -6,20 +6,20 @@
 - clean: ['~', '~/.config']
 
 - link:
-    ~/.config/backgrounds:
     ~/.bash_profile:
     ~/.bashrc:
+      force: true
+    ~/.config/backgrounds:
     ~/.config/ghostty:
     ~/.config/hypr:
-      force: true
     ~/.config/nvim:
     ~/.config/waybar:
-    ~/.gitconfig:
+    ~/.config/ohmyposh:
+    ~/.config/starship:
     /etc/keyd/default.conf:
       # This one might have be to run with sudo
       path: "keyd/default.conf"
-    ~/.config/ohmyposh:
-    ~/.config/starship:
+    ~/.gitconfig:
     ~/.tmux.conf:
     ~/.tmux/plugins/tpm:
     ~/.tmux/plugins/tmux-sensible:
