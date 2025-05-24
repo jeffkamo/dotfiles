@@ -26,3 +26,7 @@ sh ./run/fedora
 sh ./run/global # NOTE: This should come after specific environment scripts
 sh ./run/vim
 ```
+
+## Themes
+
+https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme?tab=readme-ov-file
