@@ -11,6 +11,7 @@
       force: true
     ~/.config/backgrounds:
     ~/.config/ghostty:
+    ~/.config/gtk-4.0:
     ~/.config/hypr:
     ~/.config/nvim:
     ~/.config/waybar:
@@ -20,6 +21,7 @@
       # This one might have be to run with sudo
       path: "keyd/default.conf"
     ~/.gitconfig:
+    ~/.themes:
     ~/.tmux.conf:
     ~/.tmux/plugins/tpm:
     ~/.tmux/plugins/tmux-sensible:
