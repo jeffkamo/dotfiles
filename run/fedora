@@ -26,6 +26,7 @@ dnf install gnome-tweaks # uh huh, you guessed it.
 # This is for enabling themes. Specifically, enabling
 # the theming for flatpaks. These were taking from here:
 # @url: https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme
+echo "=== Setting flatpak to support themes ==="
 flatpak override --filesystem=$HOME/.themes # Override flatpak themes to ~/.themes
 flatpak override --filesystem=$HOME/.icons # Override flatpak icons to ~/.icons:
 flatpak override --user --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/.config/gtk-4.0 locally:
@@ -37,6 +38,7 @@ flatpak override --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/
 # See `keyd/default.conf`
 # file for my custom configurations.
 # @url: https://github.com/rvaiya/keyd
+echo "=== Setting up keyboard customizations and mappings ==="
 mkdir /etc/keyd
 dnf copr enable alternateved/keyd
 dnf install keyd
