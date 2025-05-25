@@ -23,10 +23,11 @@ dnf install sassc # also for themes
 dnf install gnome-themes-extra # yup, themes
 dnf install gnome-tweaks # uh huh, you guessed it.
 
-# This is for enabling themes. Specifically, enabling
+echo "=== installing flatpak and adding support for themes ==="
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+# The below are for enabling themes. Specifically, enabling
 # the theming for flatpaks. These were taking from here:
 # @url: https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme
-echo "=== Setting flatpak to support themes ==="
 flatpak override --filesystem=$HOME/.themes # Override flatpak themes to ~/.themes
 flatpak override --filesystem=$HOME/.icons # Override flatpak icons to ~/.icons:
 flatpak override --user --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/.config/gtk-4.0 locally:
@@ -57,3 +58,9 @@ systemctl enable --now keyd
 #
 # Note: Changes to the config might not be recognized
 # until a `sudo keyd reload` is performed.
+
+# Add support for Dropbox to Nautilus. See here:
+# @url: https://github.com/dropbox/nautilus-dropbox
+# Might not actually be necessary? It's unclear...
+# echo "=== Setting up Dropbox Nautilus plugin ==="
+# dnf install -y gnome-common nautilus-devel gtk4-devel python3-docutils
