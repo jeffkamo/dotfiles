@@ -72,7 +72,6 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
-source $HOME/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # ZSH autocomplete customizations
 zstyle ':autocomplete:*' delay 1  # seconds (float)
@@ -127,7 +126,7 @@ export EDITOR='nvim'
 alias vim='nvim'
 
 # == CLIO_DEV_SETUP ==
-# Clio dev command stuff. Disable if the machine is not for Clio
+# Clio dev command stuff. Enable if the machine is for Clio
 # eval "$(dev _hook)"
 
 # == CLIO_ANDROID_SETUP ==
@@ -139,6 +138,13 @@ export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/t
 # source $ZSH/oh-my-zsh.sh
 # eval "$(starship init zsh)" # @url: https://starship.rs/
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
+
+# == Re-activate some oh-my-zsh functionality, since I don't get this with ohmyposh
+source $HOME/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source $HOME/.oh-my-zsh/lib/clipboard.zsh
+source $HOME/.oh-my-zsh/lib/completion.zsh
+source $HOME/.oh-my-zsh/lib/directories.zsh
+source $HOME/.oh-my-zsh/lib/history.zsh
 
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
