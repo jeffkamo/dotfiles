@@ -13,9 +13,12 @@
     ~/.config/ghostty:
     ~/.config/gtk-4.0:
     ~/.config/hypr:
+    ~/.config/mpd:
     ~/.config/nvim:
     ~/.config/ohmyposh:
+    ~/.config/rmpc:
     ~/.config/starship:
+    ~/.config/swaync:
     ~/.config/waybar:
     ~/.config/wofi:
     ~/.gitconfig:

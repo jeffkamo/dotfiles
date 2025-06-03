@@ -128,3 +128,7 @@ button:hover {
     padding-left: 6px;
     padding-right: 6px;
 }
+
+#custom-notification {
+    font-family: "NotoSansMono Nerd Font";
+}

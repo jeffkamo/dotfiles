@@ -1,0 +1,190 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "layer": "overlay",
+  "control-center-layer": "top",
+  "layer-shell": true,
+  "cssPriority": "application",
+  "control-center-margin-top": 0,
+  "control-center-margin-bottom": 0,
+  "control-center-margin-right": 0,
+  "control-center-margin-left": 0,
+  "notification-2fa-action": true,
+  "notification-inline-replies": false,
+  "notification-icon-size": 64,
+  "notification-body-image-height": 100,
+  "notification-body-image-width": 200,
+  "timeout": 10,
+  "timeout-low": 5,
+  "timeout-critical": 0,
+  "fit-to-screen": true,
+  "relative-timestamps": true,
+  "control-center-width": 500,
+  "control-center-height": 600,
+  "notification-window-width": 500,
+  "keyboard-shortcuts": true,
+  "image-visibility": "when-available",
+  "transition-time": 200,
+  "hide-on-clear": false,
+  "hide-on-action": true,
+  "script-fail-notify": true,
+  "scripts": {
+    "example-script": {
+      "exec": "echo 'Do something...'",
+      "urgency": "Normal"
+    },
+    "example-action-script": {
+      "exec": "echo 'Do something actionable!'",
+      "urgency": "Normal",
+      "run-on": "action"
+    }
+  },
+  "notification-visibility": {
+    "example-name": {
+      "state": "muted",
+      "urgency": "Low",
+      "app-name": "Spotify"
+    }
+  },
+  "widgets": [
+    "inhibitors",
+    "title",
+    "dnd",
+    "notifications",
+    "mpris",
+    "buttons-grid",
+    "volume"
+  ],
+  "widget-config": {
+    "inhibitors": {
+      "text": "Inhibitors",
+      "button-text": "Clear All",
+      "clear-all-button": true
+    },
+      "text": "Notifications",
+    "title": {
+      "clear-all-button": true,
+      "button-text": ""
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+    "label": {
+      "max-lines": 5,
+      "text": "Label Text"
+    },
+    "mpris": {
+      "type": "object",
+      "description": "A widget that displays multiple music players",
+      "additionalProperties": false,
+      "properties": {
+        "image-size": {
+          "type": "integer",
+          "description": "The size of the album art",
+          "default": 96
+        },
+        "image-radius": {
+          "type": "integer",
+          "description": "The border radius of the album art. Will be overriden by setting the border-radius in the style.css for the \".widget-mpris-album-art\" class",
+
+          "default": 12
+        },
+        "blur": {
+          "type": "bool",
+          "description": "Apply the artwork as the MPRIS background and blur it",
+          "default": true
+        }
+      }
+    },
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "󱚿",
+          "type": "toggle",
+          "active": true,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
+          "update_command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
+        },
+        {
+          "label": "󱚾",
+          "command": "nm-connection-editor"
+        },
+        {
+          "label": "󰂯",
+          "command": "blueman-manager"
+        },
+        {
+          "label": "󰌾",
+          "command": "hyprlock"
+        },
+        {
+          "label": "󰤄",
+          "command": "systemctl suspend"
+        },
+        {
+          "label": "󰍃",
+          "command": "hyprctl dispatch exit"
+        }
+      ]
+    },
+    "volume": {
+      "type": "object",
+      "description": "Slider to control pulse volume",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Text displayed in front of the volume slider",
+          "default": "Volume"
+        },
+        "show-per-app": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show per app volume control"
+        },
+        "show-per-app-icon": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show application icon in per app control"
+        },
+        "show-per-app-label": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show application name in per app control"
+        },
+        "empty-list-label": {
+          "type": "string",
+          "default": "No active sink input",
+          "description": "Text displayed when there are not active sink inputs"
+        },
+        "expand-button-label": {
+          "type": "string",
+          "default": "⇧",
+          "description": "Label displayed on button to show per app volume control"
+        },
+        "collapse-button-label": {
+          "type": "string",
+          "default": "⇩",
+          "description": "Label displayed on button to hide per app volume control"
+        },
+        "icon-size": {
+          "type": "integer",
+          "default": 24,
+          "description": "Size of the application icon in per app volume control"
+        },
+        "animation-type": {
+          "type": "string",
+          "default": "slide_down",
+          "description": "Animation type for menu",
+          "enum": ["slide_down", "slide_up", "none"]
+        },
+        "animation-duration":{
+          "type": "integer",
+          "default": 250,
+          "description": "Duration of animation in milliseconds"
+        }
+      }
+    }
+  }
+}

@@ -7,8 +7,10 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
+        "custom/power",
+        "battery",
+        "battery#bat2",
         "power-profiles-daemon",
-        "clock",
     ],
     "modules-center": [
 	    "hyprland/workspaces"
@@ -17,18 +19,16 @@
     "modules-right": [
         // "mpd",
         // "idle_inhibitor",
-        "pulseaudio",
-        "network",
         // "cpu",
         // "memory",
         // "temperature",
         // "backlight",
         // "keyboard-state",
         // "sway/language",
-        "battery",
-        "battery#bat2",
-        // "tray",
-        "custom/power"
+        "pulseaudio",
+        "network",
+        "clock",
+        "tray"
     ],
     // Modules configuration
     // Examples that cna be added to the format-icons dict:
@@ -39,13 +39,18 @@
     // "5": "",
     "hyprland/workspaces": {
         "disable-scroll": true,
+        "active-only": false,
         "all-outputs": true,
         "warp-on-scroll": false,
         "format": "{name}: {icon}",
         "format-icons": {
-            "urgent": "",
-            "active": "",
-            "default": ""
+            "active": "",
+            "default": "",
+            "empty": "",
+            "urgent": ""
+        },
+        "persistent-workspaces": {
+            "*": 10
         }
     },
     "keyboard-state": {
@@ -213,5 +218,25 @@
 			"suspend": "systemctl suspend",
 			"hibernate": "systemctl hibernate"
 		}
-    }
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<U+F0A2><span foreground='red'><sup><U+F444></sup></span>",
+            "none": "<U+F0A2>",
+            "dnd-notification": "<U+F1F7><span foreground='red'><sup><U+F444></sup></span>",
+            "dnd-none": "<U+F1F7>",
+            "inhibited-notification": "<U+F0A2><span foreground='red'><sup><U+F444></sup></span>",
+            "inhibited-none": "<U+F0A2>",
+            "dnd-inhibited-notification": "<U+F1F7><span foreground='red'><sup><U+F444></sup></span>",
+            "dnd-inhibited-none": "<U+F1F7>"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
 }

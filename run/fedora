@@ -13,9 +13,9 @@ dnf copr enable ghostty
 dnf install ghostty # for my terminal emulator of choice
 dnf install wofi # for spotlight-like search menu
 dnf install zsh
-dnf install starship
+dnf install starship # I tried it out, I'm not sure I'll keep this...
 dnf copr enable chronoscrat/oh-my-posh
-dnf install --refresh oh-my-posh
+dnf install --refresh oh-my-posh # Alternative to ohmyzsh. I like it, despite lacking omz's aliases
 dnf install neovim
 dnf install gh
 dnf install gtk-murrine-engine # for themes
@@ -64,3 +64,19 @@ systemctl enable --now keyd
 # Might not actually be necessary? It's unclear...
 # echo "=== Setting up Dropbox Nautilus plugin ==="
 # dnf install -y gnome-common nautilus-devel gtk4-devel python3-docutils
+
+# Add support for a command line music player: rmpc (Rust Music Player)
+#
+# Prerequisite rmpfusion, for extra media formats.
+dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+#
+# Prerequisite: MPD. Installation steps taken from...
+# @URL: https://fedoramagazine.org/playing-music-on-your-fedora-terminal-with-mpd-and-ncmpcpp/
+dnf install mpd # run with just `mpd`, and/or `systemctl start mpd`
+#
+# @URL: https://mierak.github.io/rmpc
+# ??? This didn't have an DNF package. Had to install the binary
+# manually from the Github project releases.
+#
+# At this point, I have to add or symlink my music directory to the
+# directory set in mpd.conf
