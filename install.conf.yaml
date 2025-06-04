@@ -10,6 +10,7 @@
     ~/.bashrc:
       force: true
     ~/.config/backgrounds:
+    ~/.config/electron-flags.conf:
     ~/.config/ghostty:
     ~/.config/gtk-4.0:
     ~/.config/hypr:
