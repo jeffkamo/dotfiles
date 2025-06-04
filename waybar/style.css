@@ -1,134 +1,279 @@
-@import "kanagawa.css"; /* actually Kanagawa */
+/* @import '../../.cache/wal/colors-waybar.css'; */
 
-* {
-    font-family: "MesloLGS Nerd Font Mono Bold";
-    font-size: 16px;
-    min-height: 0;
-    font-weight: bold;
+@import "colors.css";
+
+*{
+font-family: "FiraCode Nerd Font";
+font-weight: bold;
+min-height: 0;
+color: @color15;
+/* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
+font-size: 15px;
+font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+padding: 0px;
+margin-top: 0px;
+margin-bottom: 0px;
 }
+
+
 
 window#waybar {
     background: transparent;
-    /* background-color: @crust; */
-    background: rgba(0, 0, 0, 0.75);
-    color: @overlay0;
-    transition-property: background-color;
-    transition-duration: 0.1s;
-    border-bottom: 1px solid @overlay1;
 }
 
-#window {
-    margin: 8px;
-    padding-left: 8;
-    padding-right: 8;
+window#waybar.hidden {
+    opacity: 0.2;
 }
 
-button {
-    box-shadow: inset 0 -3px transparent;
-    border: none;
-    border-radius: 0;
+tooltip {
+    background: alpha(@color6, .4);
+    border-radius: 12px;
+    border: 2px solid @color5;    
 }
 
-button:hover {
-    background: inherit;
-    color: @red;
-    border-top: 2px solid @red;
+tooltip label {
+    color: @surface;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+
+
+/*-----module groups----*/
+.modules-right {
+    border: 0px solid ;
+    border-radius: 10px;
+}
+
+.modules-center {
+    background-color: @surface;
+    border: 0px solid ;
+    border-radius: 10px;
+}
+
+.modules-left {
+    border: 0px solid ;
+    border-radius: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+
+
+/*-----modules left-----*/
+
+#custom-logo {
+    background: @surface;
+    border-radius: 10px 4px 4px 10px;
+    padding-right: 4px;
+    margin-right: 3px;
+}
+
+#workspaces {
+    background: @surface;
+    padding: 0px 10px 0px 4px;
+    border-radius: 4px 10px 10px 4px;
 }
 
 #workspaces button {
-    padding: 0 4px;
 }
 
-#workspaces button.focused {
-    /* background-color: rgba(0, 0, 0, 0.3); */
-    background-color: @black;
-    color: @text;
-    border-top: 2px solid @text;
+#workspaces button label {
+    font-size:18px;
+    min-width: 0;
+    padding: 4px 16px 4px 12px;
 }
 
 #workspaces button.active {
-    /* background-color: rgba(0, 0, 0, 0.3); */
-    background-color: @black;
-    color: @red;
-    border-top: 2px solid @red;
+    background: alpha(@color13, .5);
+    border-radius: 8px;
+    border: 3px solid @color5;
+}
+
+#workspaces button.focused {
+    color: #a6adc8;
+    background: #010409;
 }
 
 #workspaces button.urgent {
-    background-color: @red;
+    background: alpha(@color9, .5);
+    animation-name: blink;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
-#pulseaudio,
-#clock,
-#battery,
+#workspaces button:hover {
+    border: 3px solid @on_primary;
+    border-radius: 8px;
+}
+
+
+
+/*-----modules center-----*/
+
+#window,
+#custom-menu,
+#custom-lock {
+    padding: 0px 10px;
+}
+
+#custom-menu:hover {
+    border: 3px solid @on_primary;
+    border-radius: 10px 4px 4px 10px;
+    background: alpha(@color13, .5);   
+}
+
+#custom-spotify {
+    color: rgb(0,0,0);
+    padding: 0 20px;
+    background-color:#33C668 ;
+    border-radius: 15px;
+}
+
+#custom-spotify:hover {
+  border-radius: 12px;
+  border: 4px solid #1c5932;   
+}
+
+#custom-lock:hover {
+    border: 3px solid @on_primary;
+    border-radius: 4px 10px 10px 4px;
+    background: alpha(@color13, .5);   
+}
+
+
+/*-----modules right-----*/
+
+@keyframes blink {
+  to {
+    color: #000000;
+  }
+}
+
 #cpu,
-#memory,
+#custom-asusprofile {
+    background: @surface;
+    font-size: 13px;
+    border-radius: 10px 4px 4px 10px;
+    padding: 0px 12px 0px 12px;
+    margin-right: 3px;
+}
+
+#custom-asusprofile {
+    margin-right: 2.1px;
+    padding-right: 20px;
+    font-size: 15px;
+}
+
+#custom-asusprofile:hover {
+    border: 3px solid @on_primary;
+    background: alpha(@color13, .5);
+}
+
 #disk,
-#temperature,
-#backlight,
-#wireplumber,
-#tray,
-#network,
-#mode,
-#scratchpad {
-  margin-top: 2px;
-  margin-bottom: 2px;
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
+#memory,
+#temperature {
+    background: @surface;
+    border-radius: 4px 4px 4px 4px;
+    margin-right: 2.1px;
+    padding: 0px 10px;
+    font-size: 13px;
 }
 
-#clock {
-    color: @maroon;
-    border-bottom: 2px solid @maroon;
+#temperature.critical {
+  color: @error_container;
 }
 
-#clock.date {
-    color: @red;
-    border-bottom: 2px solid @red;
-}
-
-#pulseaudio {
-    color: @blue;
-    border-bottom: 2px solid @blue;
+#tray {
+    background-color: @surface;
+    padding: 0px 6px;
+    border-radius: 4px 0px 0px 4px;
 }
 
 #network {
-    color: @yellow;
-    border-bottom: 2px solid @yellow;
+    background: @surface;
+    padding-left: 2px;
+    padding-right: 7px;
 }
 
-#idle_inhibitor {
-    margin-right: 12px;
-    color: @green;
-}
+/*.not-network {
+  padding-right: 0px;
+}*/
 
-#idle_inhibitor.activated {
-    color: @red;
+#custom-updates {
+    background-color: @surface;  
+    padding: 0px 2px;
 }
 
 #battery {
-    color: @green;
-    border-bottom: 2px solid @green;
+    background: @surface;
+    padding: 0px 4px;
+    margin-bottom: 0px;
+    border-radius: 0px 4px 4px 0px;    
 }
 
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left>widget:first-child>#workspaces {
-    margin-left: 0;
+#battery.critical:not(.charging) {
+  color: @error_container;
+  margin: 5px 10px;
+  animation-name: blink;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right>widget:last-child>#workspaces {
-    margin-right: 0;
+#battery.details,
+#network.details {
+   all: unset;
+   padding-left: 4px;
+   padding-right: 4px;
+   margin-bottom: -3px;
 }
 
-#custom-vpn {
-    color: @pink;
-    border-radius: 15px;
-    padding-left: 6px;
-    padding-right: 6px;
+#clock {
+    background-color: @surface;
+    font-size: 13px;
+    padding: 0px 6px;
+    border-radius: 4px 4px 4px 4px;
+    margin-left: 3px;
+    margin-right: 3px;
 }
 
 #custom-notification {
-    font-family: "NotoSansMono Nerd Font";
+    background: @surface;
+    font-family: "NotoSansMono Nerd Font";    
+    border-radius: 4px 10px 10px 4px;
+    padding: 0px 12px 0px 12px;
+    margin-left: 0px;
 }
+
+#pulseaudio,
+#pulseaudio.microphone {
+    background: @surface;    
+    border-radius: 4px 4px 4px 4px;
+    padding: 0px 14px;       
+    margin-right: 2.1px;
+}
+
+#bluetooth,
+#custom-power {
+    background: @surface;
+    border-radius: 4px 4px 4px 4px;
+    margin-right: 2.1px;
+    padding-left: 4px;
+    padding-right: 8px;
+}
+
+#bluetooth {
+    padding: 0px 14px;
+}
+
+#trayer .not-trayer > *:hover {
+  border: 3px solid @on_primary;
+  background: alpha(@color13, .5);
+}
+
+

@@ -1,0 +1,320 @@
+{
+
+  "custom/logo": {
+    "format": "  ",
+      "on-click": "ghostty",
+      "tooltip": false
+    },
+
+    "hyprland/workspaces": {
+      "format": "{icon}",
+      "on-click": "activate",
+      "all-outputs": true,
+      "sort-by-number": true,
+      "format-icons": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+        "7": "",
+        "8": "󰇮",
+        "9": "󰓇",
+        "10": "",
+        "urgent": "",
+        "default": "",
+      },
+      "persistent-workspaces": {
+        "*": 10
+      },
+      "window-rewrite-default": "",
+      "window-rewrite": {
+        "title<.*youtube.*>": "",
+        "class<firefox>": "",
+        "class<firefox> title<.*github.*>": "",
+        "Chromium": "",
+      },
+      "on-scroll-up": "hyprctl dispatch workspace e+1",
+      "on-scroll-down": "hyprctl dispatch workspace e-1",
+    },
+
+    "custom/menu": {
+      "format": "  ",
+      "tooltip": false,
+      "on-click": "wofi --show drun",
+    },
+
+    "hyprland/window": {
+      "format": "{initialTitle}",
+      "max-length": 30,
+      "separate-outputs": true,
+      "tooltip": false,
+      "rewrite": {
+        "Mozilla Firefox": " $1",
+        "ghostty": " Ghostty",
+        "zsh": " Terminal",
+        "Friends - Discord": " Discord",
+        "Spotify": " Spotify",
+        "Spotify Premium": "󰓇 Spotify",
+      }
+    },
+
+    "custom/spotify": {
+      "exec": "/usr/bin/python3 ~/.config/hypr/scripts/mediaplayer.py --player spotify",
+      "format": "{} ",
+      "return-type": "json",
+      "on-click": "playerctl play-pause",
+      "on-scroll-up": "playerctl next",
+      "on-scroll-down": "playerctl previous"
+    },
+
+    "custom/lock": {
+      "format": "",
+      "on-click": "sleep 0.5; hyprlock",
+      "tooltip": false,
+    },
+
+    "group/hardware": {
+      "orientation": "inherit",
+      "drawer": {
+        "transition-duration": 500,
+        "children-class": "not-hardware",
+        "transition-left-to-right": false
+      },
+      "modules": [
+        "cpu",
+      "memory",
+      "disk",
+      "temperature",
+      ]
+    },
+
+    "cpu": {
+      "format": " {usage}%",
+      "interval": 1,
+      "max-length": 10,
+      "on-click": "kitty -e btop --utf-force"
+    },
+
+    "temperature": {
+      "interval": 10,
+      "tooltip": false,
+      "thermal-zone": 0,
+      "critical-threshold": 82,
+      "format-critical": "{icon}{temperatureC}°C",
+      "format": "{icon} {temperatureC}°C",
+      "format-icons": [""],
+      "on-click-right": "kitty --title btop sh -c 'btop'"
+    },
+
+    "disk": {
+      "interval": 30,
+      "format": "󰋊 {free}",
+      "path": "/",
+      "tooltip": true,
+      "tooltip-format": "{used} used out of {total} on {path} ({percentage_used}%)",
+    },
+
+    "memory": {
+      "states": {
+        "warning": 80
+      },
+      "interval": 5,
+      "format": " {}%",
+      "format-alt": " {used:0.1f}G%",
+      "format-alt-click": "click",
+      "tooltip": true,
+      "tooltip-format": "{used:0.1f}G/{total:0.1f}G",
+      "on-click-right": "kitty --title btop sh -c 'btop' --utf-force"
+    },
+
+    "tray": {
+      "icon-size": 18,
+      "spacing": 8
+    },
+
+    "group/network": {
+      "orientation": "inherit",
+      "drawer": {
+        "transition-duration": 500,
+        "children-class": "not-network",
+        "transition-left-to-right": true
+      },
+      "modules": [
+        "network",
+      "network#details"
+      ]
+    },
+
+    "network": {
+      "format": "{ifname}",
+      "format-wifi": "{icon}",
+      "format-ethernet": "󰈁",
+      "format-disconnected": "✈",
+      "max-length": 50,
+      "interval": 1,
+      "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", ""],
+      "tooltip": false,
+    },
+
+    "network#details": {
+      "format": "{essid}:  {bandwidthDownBytes}  {bandwidthUpBytes}",
+      "format-ethernet": "{ifname}:  {bandwidthDownBytes}  {bandwidthUpBytes}",
+      "max-length": 100,
+      "interval": 1,
+      "tooltip": false,
+    },
+
+    "group/battery": {
+      "orientation": "horizontal",
+      "drawer": {
+        "transition-duration": 500,
+        "children-class": "not-battery",
+        "transition-left-to-right": true
+      },
+      "modules": [
+        "battery",
+      "battery#details"
+      ]
+    },
+
+    "battery": {
+      "interval": 30,
+      "full-at": 80,
+      "design-capacity": false,
+      "states": {
+        "good": 80,
+        "warning": 30,
+        "critical": 15
+      },
+      "format": "{icon} ",
+      "format-plugged": "󰂄",
+      "format-charging": "{icon}<span foreground='white' font-size='18pt'><sup>󱐋</sup></span>",
+      "format-alt": "{capacity}%",
+      "format-icons": ["", "", "", "", ""],
+      "tooltip": false,
+    },
+
+    "battery#details": {
+      "format": "{capacity}% {time}",
+      "max-length": 100,
+      "interval": 30,
+      "tooltip": false,
+    },
+
+    "privacy": {
+      "icon-spacing": 4,
+      "icon-size": 17,
+      "transition-duration": 10,
+      "modules": [
+      {
+        "type": "screenshare",
+        "tooltip": true,
+        "tooltip-icon-size": 17
+      },
+      {
+        "type": "audio-in",
+        "tooltip": true,
+        "tooltip-icon-size": 17
+      }
+      ]
+    },
+
+    "clock": {
+      "format": " {:%a, %d %b %I:%M %p}",
+      "smooth-scrolling-threshold": 4,
+      "on-click": "gnome-calendar",
+      "tooltip": false,
+    },
+    "actions":  {
+      "on-click-right": "gnome-calendar",
+    },
+
+    "group/trayer": {
+      "orientation": "inherit",
+      "drawer": {
+        "transition-duration": 500,
+        "children-class": "not-trayer",
+        "transition-left-to-right": false
+      },
+      "modules": [
+        "custom/notification",
+      "pulseaudio",
+      "pulseaudio#microphone",
+      "bluetooth",
+      "custom/power"
+      ]
+    },
+
+    "custom/notification": {
+      "tooltip": false,
+      "format": "{icon}",
+      "format-icons": {
+        "notification": "<span foreground='red' font-size='14pt'><sup></sup></span>",
+        "none": "",
+        "dnd-notification": "<span foreground='red' font-size='14pt'><sup></sup></span>",
+        "dnd-none": "",
+        "inhibited-notification": "<span foreground='red' font-size='14pt'><sup></sup></span>",
+        "inhibited-none": "",
+        "dnd-inhibited-notification": "<span foreground='red' font-size='14pt'><sup></sup></span>",
+        "dnd-inhibited-none": ""
+      },
+      "return-type": "json",
+      "exec-if": "which swaync-client",
+      "exec": "swaync-client -swb",
+      "on-click": "swaync-client -t -sw",
+      "on-click-right": "swaync-client -d -sw",
+      "escape": true
+    },
+
+    "custom/power": {
+      "format": "  ",
+      "tooltip": false,
+      "on-click": "sh -c '(sleep 0.5s; wlogout --protocol layer-shell)' & disown",
+    },
+
+    "bluetooth": {
+      "format": "",
+      "format-disabled": "󰂳",
+      "format-connected": " {device_alias}",
+      "tooltip": false,
+      "on-click": "blueman-manager"
+    },
+
+    "pulseaudio": {
+      "format": "{icon} {volume}",
+      "format-bluetooth": "{icon}  {volume}%",
+      "format-muted": "",
+      "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", "", "󰕾"],
+        "ignored-sinks": ["Easy Effects Sink"],
+      },
+      "scroll-step": 5.0,
+      "on-click": "~/.config/hypr/scripts/Volume.sh --toggle",
+      "on-click-right": "pavucontrol",
+      "on-scroll-up": "~/.config/hypr/scripts/Volume.sh --inc",
+      "on-scroll-down": "~/.config/hypr/scripts/Volume.sh --dec",
+      "smooth-scrolling-threshold": 1,
+      "tooltip": false,
+    },
+
+    "pulseaudio#microphone": {
+      "format": "{format_source}",
+      "format-source": "",
+      "format-source-muted": "",
+      "on-click": "~/.config/hypr/scripts/Volume.sh --toggle-mic",
+      "on-click-right": "pavucontrol",
+      "on-scroll-up": "~/.config/hypr/scripts/Volume.sh --mic-inc",
+      "on-scroll-down": "~/.config/hypr/scripts/Volume.sh --mic-dec",
+      "scroll-step": 5,
+      "tooltip": false,
+    },
+
+}
