@@ -115,6 +115,7 @@ export PATH=$HOME/.nodenv/versions/14.17.0/bin/prettierd:$PATH
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Make autocomplete more like Bash
 # http://serverfault.com/questions/109207/how-do-i-make-zsh-completion-act-more-like-bash-completion

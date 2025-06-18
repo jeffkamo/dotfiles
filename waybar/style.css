@@ -2,20 +2,18 @@
 
 @import "colors.css";
 
-*{
-font-family: "FiraCode Nerd Font";
-font-weight: bold;
-min-height: 0;
-color: @color15;
-/* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
-font-size: 15px;
-font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
-padding: 0px;
-margin-top: 0px;
-margin-bottom: 0px;
+* {
+    font-family: "FiraCode Nerd Font";
+    font-weight: bold;
+    min-height: 0;
+    color: @color15;
+    /* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
+    font-size: 15px;
+    font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
-
-
 
 window#waybar {
     background: transparent;
@@ -68,6 +66,7 @@ tooltip label {
     border-radius: 10px 4px 4px 10px;
     padding-right: 4px;
     margin-right: 3px;
+    font-size: 1.5em;
 }
 
 #workspaces {
@@ -77,6 +76,8 @@ tooltip label {
 }
 
 #workspaces button {
+    border-radius: 8px;
+    border: 3px solid transparent;
 }
 
 #workspaces button label {
@@ -86,9 +87,10 @@ tooltip label {
 }
 
 #workspaces button.active {
-    background: alpha(@color13, .5);
+    background: alpha(#ee0000, .25);
+    /* background: alpha(@color13, .5); */
     border-radius: 8px;
-    border: 3px solid @color5;
+    /* border: 3px solid @color5; */
 }
 
 #workspaces button.focused {

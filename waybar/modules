@@ -12,16 +12,16 @@
       "all-outputs": true,
       "sort-by-number": true,
       "format-icons": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": "",
-        "6": "",
-        "7": "",
-        "8": "󰇮",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "󰭻",
+        "5": "",
+        "6": "",
+        "7": "",
+        "8": "",
         "9": "󰓇",
-        "10": "",
+        "10": "󰊠",
         "urgent": "",
         "default": "",
       },
@@ -84,9 +84,9 @@
       },
       "modules": [
         "cpu",
-      "memory",
-      "disk",
-      "temperature",
+        "memory",
+        "disk",
+        "temperature",
       ]
     },
 
@@ -143,7 +143,7 @@
       },
       "modules": [
         "network",
-      "network#details"
+        "network#details"
       ]
     },
 
@@ -175,7 +175,7 @@
       },
       "modules": [
         "battery",
-      "battery#details"
+        "battery#details"
       ]
     },
 
@@ -208,16 +208,16 @@
       "icon-size": 17,
       "transition-duration": 10,
       "modules": [
-      {
-        "type": "screenshare",
-        "tooltip": true,
-        "tooltip-icon-size": 17
-      },
-      {
-        "type": "audio-in",
-        "tooltip": true,
-        "tooltip-icon-size": 17
-      }
+        {
+          "type": "screenshare",
+          "tooltip": true,
+          "tooltip-icon-size": 17
+        },
+        {
+          "type": "audio-in",
+          "tooltip": true,
+          "tooltip-icon-size": 17
+        }
       ]
     },
 
@@ -240,10 +240,10 @@
       },
       "modules": [
         "custom/notification",
-      "pulseaudio",
-      "pulseaudio#microphone",
-      "bluetooth",
-      "custom/power"
+        "pulseaudio",
+        "pulseaudio#microphone",
+        "bluetooth",
+        "custom/power",
       ]
     },
 

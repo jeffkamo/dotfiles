@@ -12,8 +12,8 @@
   "margin-right": 8,
   
   "modules-left": [
-    "custom/logo"
-    // "hyprland/workspaces",
+    "custom/logo",
+    "hyprland/workspaces"
   ],
   
   "modules-center": [

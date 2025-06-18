@@ -22,6 +22,8 @@ dnf install gtk-murrine-engine # for themes
 dnf install sassc # also for themes
 dnf install gnome-themes-extra # yup, themes
 dnf install gnome-tweaks # uh huh, you guessed it.
+dnf install rust cargo # Install Rust package manager
+dnf install rustup # Install Rust itself via rustup
 
 echo "=== installing flatpak and adding support for themes ==="
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -32,6 +34,9 @@ flatpak override --filesystem=$HOME/.themes # Override flatpak themes to ~/.them
 flatpak override --filesystem=$HOME/.icons # Override flatpak icons to ~/.icons:
 flatpak override --user --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/.config/gtk-4.0 locally:
 flatpak override --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/.config/gtk-4.0 globally:
+
+echo "=== Installing packages for theming Hyprland ==="
+cargo install matugen
 
 # This is a fix for getting my cursor theme to work. The
 # usual advice was not work (ex. use Gnome Tweaks to set
@@ -75,8 +80,4 @@ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$
 dnf install mpd # run with just `mpd`, and/or `systemctl start mpd`
 #
 # @URL: https://mierak.github.io/rmpc
-# ??? This didn't have an DNF package. Had to install the binary
-# manually from the Github project releases.
-#
-# At this point, I have to add or symlink my music directory to the
-# directory set in mpd.conf
+cargo install rmpc --locked
