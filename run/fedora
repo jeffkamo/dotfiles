@@ -78,6 +78,7 @@ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$
 # Prerequisite: MPD. Installation steps taken from...
 # @URL: https://fedoramagazine.org/playing-music-on-your-fedora-terminal-with-mpd-and-ncmpcpp/
 dnf install mpd # run with just `mpd`, and/or `systemctl start mpd`
+dnf install mpDris2 # this adds support for mpd meta access to mpris for displaying songs in widgets
 #
 # @URL: https://mierak.github.io/rmpc
 cargo install rmpc --locked
