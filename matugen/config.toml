@@ -1,6 +1,7 @@
 [config.wallpaper]
-set = false
-# command = "waypaper"
+command = "waypaper"
+set = true
+arguments = ["--fill", "center", "--backend", "hyprpaper"]
 # arguments = ["img", "--transition-type", "center"]
 
 [templates.waybar]
@@ -8,15 +9,15 @@ input_path = './templates/colors.css'
 output_path = '~/.config/waybar/colors.css'
 post_hook = 'pkill -SIGUSR2 waybar'
 
-# [templates.hyprland]
-# input_path = './templates/colors.css'
-# output_path = '~/.config/hypr/colors.conf'
-# post_hook = 'hyprctl reload'
+[templates.hyprland]
+input_path = './templates/colors.css'
+output_path = '~/.config/hypr/colors.conf'
+post_hook = 'hyprctl reload'
 
 # [templates.gtk3]
 # input_path = './templates/colors.css'
 # output_path = '~/.config/gtk-3.0/colors.css'
-#
-# [templates.gtk4]
-# input_path = './templates/colors.css'
-# output_path = '~/.config/gtk-4.0/colors.css'
+
+[templates.gtk4]
+input_path = './templates/colors.css'
+output_path = '~/.config/gtk-4.0/colors.css'
