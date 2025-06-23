@@ -18,8 +18,8 @@
   
   "modules-center": [
     "custom/menu",
-    "hyprland/window",
-    // "custom/spotify", // This one requires looking into...
+    // "hyprland/window",
+    "custom/spotify", // Actually this is playerctl, not spotify. Keeping the name for styling purposes
     "custom/lock",
   ],
   

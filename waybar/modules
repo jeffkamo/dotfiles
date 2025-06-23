@@ -61,12 +61,11 @@
     },
 
     "custom/spotify": {
-      "exec": "/usr/bin/python3 ~/.config/hypr/scripts/mediaplayer.py --player spotify",
-      "format": "{} ",
-      "return-type": "json",
+      "exec": "playerctl metadata --format '{{ artist }} - {{ title }}'",
+      "format": "󰎆  {}",
       "on-click": "playerctl play-pause",
-      "on-scroll-up": "playerctl next",
-      "on-scroll-down": "playerctl previous"
+      "max-length": 40,
+      "interval": 10
     },
 
     "custom/lock": {

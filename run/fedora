@@ -6,9 +6,6 @@ dnf copr enable solopasha/hyprland # required to access some hyprland dnf module
 dnf install hyprshot # for screenshots
 dnf install hyprlock # for locking the screen
 dnf install hypridle # for locking the screen when idle
-dnf install hyprpaper # for desktop wallpaper
-dnf install waybar # for hyprland top bar module
-def install swaync # for notification center. Gets notifications from Gnome's lib-notify
 dnf copr enable ghostty
 dnf install ghostty # for my terminal emulator of choice
 dnf install wofi # for spotlight-like search menu
@@ -36,7 +33,12 @@ flatpak override --user --filesystem=xdg-config/gtk-4.0 # Override flatpak theme
 flatpak override --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/.config/gtk-4.0 globally:
 
 echo "=== Installing packages for theming Hyprland ==="
+dnf install hyprpaper # for desktop wallpaper
+dnf install waybar # for hyprland top bar module
+def install swaync # for notification center. Gets notifications from Gnome's lib-notify
 cargo install matugen
+dnf copr enable solopasha/hyprland
+dnf install waypaper
 
 # This is a fix for getting my cursor theme to work. The
 # usual advice was not work (ex. use Gnome Tweaks to set

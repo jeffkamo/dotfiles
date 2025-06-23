@@ -49,11 +49,11 @@
   },
   "widgets": [
     "inhibitors",
-    "title",
-    "dnd",
     "buttons-grid",
     "volume",
     "mpris",
+    "title",
+    "dnd",
     "notifications"
   ],
   "widget-config": {
