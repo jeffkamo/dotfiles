@@ -84,3 +84,9 @@ dnf install mpDris2 # this adds support for mpd meta access to mpris for display
 #
 # @URL: https://mierak.github.io/rmpc
 cargo install rmpc --locked
+
+# Timeshift for backing up system files. (I use Pika for /home files)
+dnf install timeshift
+# Note about Pika: in order to encrypt my backups, it needs gnome-keyring
+# daemon to do so. I use Seahose (Password & Keys) app (installed via Software)
+# to handle keys and secrets for this purpose.

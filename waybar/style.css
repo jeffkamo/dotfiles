@@ -87,15 +87,15 @@ tooltip label {
 }
 
 #workspaces button.active {
-    background: alpha(#ee0000, .25);
+    background: alpha(@on_error, .5);
     /* background: alpha(@color13, .5); */
     border-radius: 8px;
     /* border: 3px solid @color5; */
 }
 
 #workspaces button.focused {
-    color: #a6adc8;
-    background: #010409;
+    color: @pprimary;
+    background: @surface_container;
 }
 
 #workspaces button.urgent {
@@ -120,30 +120,38 @@ tooltip label {
 #custom-menu,
 #custom-lock {
     padding: 0px 10px;
+    border: 4px solid @surface;
+}
+
+#custom-menu {
+    border-radius: 10px 4px 4px 10px;
 }
 
 #custom-menu:hover {
-    border: 3px solid @on_primary;
     border-radius: 10px 4px 4px 10px;
     background: alpha(@color13, .5);   
 }
 
 #custom-spotify {
-    color: rgb(0,0,0);
+    color: @scrim;
     padding: 0 20px;
-    background-color:#33C668 ;
+    background-color: @tertiary; /*#33C668 ;*/
     border-radius: 15px;
+    border: 4px solid @tertiary; /*#1c5932;*/
 }
 
 #custom-spotify:hover {
-  border-radius: 12px;
-  border: 4px solid #1c5932;   
+    border-radius: 12px;
+    background-color: @secondary;
+    border: 4px solid @secondary; /*#1c5932;*/
+}
+
+#custom-lock {
+    border-radius: 4px 10px 10px 4px;
 }
 
 #custom-lock:hover {
-    border: 3px solid @on_primary;
-    border-radius: 4px 10px 10px 4px;
-    background: alpha(@color13, .5);   
+    background: alpha(@surface, .5);   
 }
 
 
