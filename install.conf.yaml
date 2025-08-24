@@ -6,36 +6,37 @@
 - clean: ['~', '~/.config']
 
 - link:
-    ~/.bash_profile:
-    ~/.bashrc:
-      force: true
-    ~/.config/backgrounds:
-    ~/.config/electron-flags.conf:
+    # ~/.bash_profile:
+    # ~/.bashrc:
+    #  force: true
+    # ~/.config/backgrounds:
+    # ~/.config/electron-flags.conf:
     ~/.config/ghostty:
-    ~/.config/gtk-4.0:
+    # ~/.config/gtk-4.0:
     ~/.config/hypr:
-    ~/.config/matugen:
-    ~/.config/mpd:
+    # ~/.config/matugen:
+    # ~/.config/mpd:
     ~/.config/nvim:
     ~/.config/ohmyposh:
-    ~/.config/rmpc:
-    ~/.config/starship:
-    ~/.config/swaync:
+    ~/.config/omarchy:
+    # ~/.config/rmpc:
+    # ~/.config/starship:
+    # ~/.config/swaync:
     ~/.config/waybar:
-    ~/.config/waypaper:
-    ~/.config/wofi:
-    ~/.gitconfig:
-    ~/.icons:
-    ~/.themes:
-    ~/.tmux.conf:
-    ~/.tmux/plugins/tmux-sensible:
-    ~/.tmux/plugins/tpm:
+    # ~/.config/waypaper:
+    # ~/.config/wofi:
+    # ~/.gitconfig:
+    # ~/.icons:
+    # ~/.themes:
+    # ~/.tmux.conf:
+    # ~/.tmux/plugins/tmux-sensible:
+    # ~/.tmux/plugins/tpm:
     ~/.zshrc:
     ~/.zsh/plugins/zsh-autocomplete:
-    ~/tmux-powerline:
+    # ~/tmux-powerline:
     /etc/keyd/default.conf:
       # This one might have be to run with sudo
       path: "keyd/default.conf"
 
 # - shell:
-    # - chsh -s $(which zsh)
+#     - chsh -s $(which zsh)

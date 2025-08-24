@@ -1,10 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
-# Path to your Oh My Zsh installation.
-# export ZSH="$HOME/.oh-my-zsh"
-# NOTE: This is current commented out in favor of Starship
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -74,7 +67,7 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 
 # ZSH autocomplete customizations
-zstyle ':autocomplete:*' delay 1  # seconds (float)
+# zstyle ':autocomplete:*' delay 1  # seconds (float)
 
 # User configuration
 
@@ -105,48 +98,103 @@ zstyle ':autocomplete:*' delay 1  # seconds (float)
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Custom paths
-export PATH="$HOME/Library/Python/2.7/bin:$PATH" # for the aws eb CLI
-export PATH="/usr/local/sbin:$PATH" # recommended by `brew doctor`
-export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-export PATH=$HOME/.nodenv/shims/typescript-language-server:$PATH
-export PATH=$HOME/.nodenv/versions/14.17.0/bin/prettierd:$PATH
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-
 # Make autocomplete more like Bash
 # http://serverfault.com/questions/109207/how-do-i-make-zsh-completion-act-more-like-bash-completion
-setopt noautomenu
-setopt nomenucomplete
+# setopt noautomenu
+# setopt nomenucomplete
 
-# Some Neovim stuff
-export EDITOR='nvim'
-alias vim='nvim'
+# Work (Clio)
+# ===========
 
-# == CLIO_DEV_SETUP ==
-# Clio dev command stuff. Enable if the machine is for Clio
-# eval "$(dev _hook)"
+# Clio - Paths for Work
+# ---------------------
+# export PATH="$HOME/Library/Python/2.7/bin:$PATH" # for the aws eb CLI
+# export PATH="/usr/local/sbin:$PATH" # recommended by `brew doctor`
+# export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
+# export PATH=$HOME/.nodenv/shims/typescript-language-server:$PATH
+# export PATH=$HOME/.nodenv/versions/14.17.0/bin/prettierd:$PATH
+# export PATH="/opt/homebrew/bin:$PATH"
+# export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
 
-# == CLIO_ANDROID_SETUP ==
-# Android PATHs
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin/:$PATH"
+# Clio - Android setup, including paths
+# -------------------------------------
+# export ANDROID_HOME="$HOME/Library/Android/sdk"
+# export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin/:$PATH"
 
-# == PERSONAL SETUP ==
-# source $ZSH/oh-my-zsh.sh
-# eval "$(starship init zsh)" # @url: https://starship.rs/
+# Clio - Dev CLI setup
+# --------------------
+# eval "$(dev _hook)" # Enable if this is a work machine for Clio
+
+# Personal
+# ========
+
+# ZSH customizations with ZINIT plugins
+# -------------------------------------
+
+# Set the directory we want to store zinit and plugins
+# https://github.com/zdharma-continuum/zinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+# Download Zinit if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Load zinit dependencies / zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab # especially used for ctrl-r history search
+
+# keybindings for zsh stuff
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+
+# Configure zinit plugins
+HISTSIZE=5000 # the size of the history
+HISTFILE=~/.zsh_history # The location history is saved
+SAVEHIST=$HISTSIZE # must be the same size as HISTSIZE
+HISTDUPE=erase # whether duplicates are erased or not
+setopt appendhistory # appends to history rather than overriding it
+setopt sharehistory # shares history across all zsh sessions that are simultaneously running
+setopt hist_ignore_space # prevents a command from writing to history if it starts with a space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups # prevents dupes from appearing in historical search
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "{(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+
+# Load zinit completions
+autoload -U compinit && compinit
+zinit cdreplay -q # Not sure what this is, something about caching? Recommended by zinit's docs
+
+# Personal paths
+# --------------
+export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH" # where oh-my-posh is located
+export PATH="$HOME/.local/share:$PATH" # where zinit is location
+
+# Setup oh-my-posh for custom prompt goodness
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 
-# == Re-activate some oh-my-zsh functionality, since I don't get this with ohmyposh
-source $HOME/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source $HOME/.oh-my-zsh/lib/clipboard.zsh
-source $HOME/.oh-my-zsh/lib/completion.zsh
-source $HOME/.oh-my-zsh/lib/directories.zsh
-source $HOME/.oh-my-zsh/lib/history.zsh
+# My aliases
+export EDITOR='nvim'
+alias vim='nvim'
+alias ls='eza -lah --icons=auto --group-directories-first'
+alias l='eza -lah --icons=auto --group-directories-first'
+alias ll='eza -lh --icons=auto --group-directories-first'
 
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# I think this is related to TMUX stuff
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

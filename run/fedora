@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 echo "=== Installing DNF Packages ==="
-dnf install hyprland # for tiling window system
+dnf install hyprland               # for tiling window system
 dnf copr enable solopasha/hyprland # required to access some hyprland dnf modules
-dnf install hyprshot # for screenshots
-dnf install hyprlock # for locking the screen
-dnf install hypridle # for locking the screen when idle
+dnf install hyprshot               # for screenshots
+dnf install hyprlock               # for locking the screen
+dnf install hypridle               # for locking the screen when idle
 dnf copr enable ghostty
 dnf install ghostty # for my terminal emulator of choice
-dnf install wofi # for spotlight-like search menu
+dnf install wofi    # for spotlight-like search menu
 dnf install zsh
 dnf install starship # I tried it out, I'm not sure I'll keep this...
 dnf copr enable chronoscrat/oh-my-posh
@@ -16,26 +16,26 @@ dnf install --refresh oh-my-posh # Alternative to ohmyzsh. I like it, despite la
 dnf install neovim
 dnf install gh
 dnf install gtk-murrine-engine # for themes
-dnf install sassc # also for themes
+dnf install sassc              # also for themes
 dnf install gnome-themes-extra # yup, themes
-dnf install gnome-tweaks # uh huh, you guessed it.
-dnf install rust cargo # Install Rust package manager
-dnf install rustup # Install Rust itself via rustup
+dnf install gnome-tweaks       # uh huh, you guessed it.
+dnf install rust cargo         # Install Rust package manager
+dnf install rustup             # Install Rust itself via rustup
 
 echo "=== installing flatpak and adding support for themes ==="
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 # The below are for enabling themes. Specifically, enabling
 # the theming for flatpaks. These were taking from here:
 # @url: https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme
-flatpak override --filesystem=$HOME/.themes # Override flatpak themes to ~/.themes
-flatpak override --filesystem=$HOME/.icons # Override flatpak icons to ~/.icons:
+flatpak override --filesystem=$HOME/.themes             # Override flatpak themes to ~/.themes
+flatpak override --filesystem=$HOME/.icons              # Override flatpak icons to ~/.icons:
 flatpak override --user --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/.config/gtk-4.0 locally:
-flatpak override --filesystem=xdg-config/gtk-4.0 # Override flatpak themes to ~/.config/gtk-4.0 globally:
+flatpak override --filesystem=xdg-config/gtk-4.0        # Override flatpak themes to ~/.config/gtk-4.0 globally:
 
 echo "=== Installing packages for theming Hyprland ==="
 dnf install hyprpaper # for desktop wallpaper
-dnf install waybar # for hyprland top bar module
-def install swaync # for notification center. Gets notifications from Gnome's lib-notify
+dnf install waybar    # for hyprland top bar module
+def install swaync    # for notification center. Gets notifications from Gnome's lib-notify
 cargo install matugen
 dnf copr enable solopasha/hyprland
 dnf install waypaper
@@ -79,7 +79,7 @@ dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$
 #
 # Prerequisite: MPD. Installation steps taken from...
 # @URL: https://fedoramagazine.org/playing-music-on-your-fedora-terminal-with-mpd-and-ncmpcpp/
-dnf install mpd # run with just `mpd`, and/or `systemctl start mpd`
+dnf install mpd     # run with just `mpd`, and/or `systemctl start mpd`
 dnf install mpDris2 # this adds support for mpd meta access to mpris for displaying songs in widgets
 #
 # @URL: https://mierak.github.io/rmpc
