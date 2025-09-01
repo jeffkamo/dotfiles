@@ -4,6 +4,8 @@
 # Dropbox
 # Keyd
 # zsh
+# cups # for printer daemon, can visit locally at http://localhost:631/
+# brother-hl-l2370dw # my specific printer
 
 # oh-my-zsh
 # Install this for the plugins, like diretories, history, etc.
