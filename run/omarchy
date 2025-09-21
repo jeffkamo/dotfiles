@@ -13,3 +13,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 # ohmyposh
 curl -s https://ohmyposh.dev/install.sh | bash -s
+
+# Keyboard stuff
+# noto-fonts-cjk (Japanese font)
