@@ -73,6 +73,8 @@ term = xterm-256color
 
 # Keybindings
 keybind = f11=toggle_fullscreen
+keybind = shift+insert=paste_from_clipboard
+keybind = control+insert=copy_to_clipboard
 keybind = ctrl+enter=unbind
 
 # Cursor stlying
