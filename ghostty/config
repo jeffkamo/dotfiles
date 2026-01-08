@@ -75,6 +75,10 @@ term = xterm-256color
 keybind = f11=toggle_fullscreen
 keybind = shift+insert=paste_from_clipboard
 keybind = control+insert=copy_to_clipboard
+keybind = super+control+shift+alt+arrow_down=resize_split:down,100
+keybind = super+control+shift+alt+arrow_up=resize_split:up,100
+keybind = super+control+shift+alt+arrow_left=resize_split:left,100
+keybind = super+control+shift+alt+arrow_right=resize_split:right,100
 keybind = ctrl+enter=unbind
 
 # Cursor stlying
@@ -84,3 +88,6 @@ shell-integration-features = no-cursor
 
 # Theme
 config-file = ?"~/.config/omarchy/current/theme/ghostty.conf"
+
+# Slowdown mouse scrolling
+mouse-scroll-multiplier = 0.95
