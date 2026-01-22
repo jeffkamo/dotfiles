@@ -190,6 +190,7 @@ eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 # My aliases
 export EDITOR='nvim'
 alias vim='nvim'
+alias lg='lazygit'
 alias ls='eza -lah --icons=auto --group-directories-first'
 alias l='eza -lah --icons=auto --group-directories-first'
 alias ll='eza -lh --icons=auto --group-directories-first'
