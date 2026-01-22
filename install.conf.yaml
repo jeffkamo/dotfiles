@@ -28,9 +28,9 @@
     # ~/.gitconfig:
     # ~/.icons:
     # ~/.themes:
-    # ~/.tmux.conf:
-    # ~/.tmux/plugins/tmux-sensible:
-    # ~/.tmux/plugins/tpm:
+    ~/.tmux.conf:
+    ~/.tmux/plugins/tmux-sensible:
+    ~/.tmux/plugins/tpm:
     ~/.zshrc:
     ~/.zsh/plugins/zsh-autocomplete:
     # ~/tmux-powerline:
