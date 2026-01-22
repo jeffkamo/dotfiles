@@ -45,6 +45,11 @@
 # background-opacity = 0.9
 background-blur = true
 
+# These don't work as is with my nvim panes
+# keybind = ctrl+h=goto_split:left
+# keybind = ctrl+j=goto_split:bottom
+# keybind = ctrl+k=goto_split:top
+# keybind = ctrl+l=goto_split:right
 
 
 # DHH's Ghostty config
@@ -73,12 +78,12 @@ term = xterm-256color
 
 # Keybindings
 keybind = f11=toggle_fullscreen
-keybind = shift+insert=paste_from_clipboard
-keybind = control+insert=copy_to_clipboard
-keybind = super+control+shift+alt+arrow_down=resize_split:down,100
-keybind = super+control+shift+alt+arrow_up=resize_split:up,100
-keybind = super+control+shift+alt+arrow_left=resize_split:left,100
-keybind = super+control+shift+alt+arrow_right=resize_split:right,100
+# keybind = shift+insert=paste_from_clipboard
+# keybind = control+insert=copy_to_clipboard
+# keybind = super+control+shift+alt+arrow_down=resize_split:down,100
+# keybind = super+control+shift+alt+arrow_up=resize_split:up,100
+# keybind = super+control+shift+alt+arrow_left=resize_split:left,100
+# keybind = super+control+shift+alt+arrow_right=resize_split:right,100
 keybind = ctrl+enter=unbind
 
 # Cursor stlying
