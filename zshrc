@@ -10,6 +10,7 @@ export PATH=$HOME/.nodenv/versions/14.17.0/bin/prettierd:$PATH
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Clio dev command stuff. Disable if the machine is not for Clio
 eval "$(dev _hook)"
@@ -37,3 +38,11 @@ export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/t
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+[[ -d "/opt/clio/bin/devxp" ]] && export PATH="/opt/clio/bin/devxp:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/jeffkamo/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jeffkamo/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/jeffkamo/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jeffkamo/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
