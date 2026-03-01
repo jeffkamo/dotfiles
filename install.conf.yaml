@@ -16,7 +16,7 @@
     ~/.config/hypr:
     # ~/.config/matugen:
     # ~/.config/mpd:
-    ~/.config/nvim:
+    # ~/.config/nvim: # use Omarchy defaults
     ~/.config/ohmyposh:
     ~/.config/omarchy:
     # ~/.config/rmpc:
