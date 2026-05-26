@@ -10,6 +10,10 @@
       path: .config/nvim
       force: true
       create: true
+    "~/Library/Application Support/lazygit/config.yml":
+      path: .config/lazygit/config.yml
+      force: true
+      create: true
     ~/tmux-powerline:
       path: tmux-powerline
       force: true
