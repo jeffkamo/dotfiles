@@ -1,6 +1,5 @@
 gui:
   skipDiscardChangeWarning: true
-
 customCommands:
   - key: 'n'
     description: 'New worktree (wt switch --create)'
@@ -21,30 +20,17 @@ customCommands:
         title: 'Branch name'
         key: 'BranchName'
     command: >-
-      BRANCH="{{.Form.Prefix}}{{.Form.BranchName}}";
-      BASE=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@' \
+      BRANCH="{{.Form.Prefix}}{{.Form.BranchName}}"; BASE=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@' \
+
         || git ls-remote --symref origin HEAD 2>/dev/null | awk '/^ref:/ {sub("refs/heads/","",$2); print $2; exit}' \
         || echo main);
-      if (git show-ref --verify --quiet refs/heads/$BRANCH && wt switch $BRANCH ||
-      wt switch --create $BRANCH --base $BASE); then
-      NEW_PATH=$(git worktree list | grep -F "[$BRANCH]" | awk '{print $1}');
-      echo "$NEW_PATH" > ~/.nvim_cwd;
-      [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr "execute('cd $NEW_PATH')" 2>/dev/null;
-      [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr 'execute("bdelete!")' 2>/dev/null;
-      fi
-
+      if (git show-ref --verify --quiet refs/heads/$BRANCH && wt switch $BRANCH || wt switch --create $BRANCH --base $BASE); then NEW_PATH=$(git worktree list | grep -F "[$BRANCH]" | awk '{print $1}'); echo "$NEW_PATH" > ~/.nvim_cwd; [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr "execute('cd $NEW_PATH')" 2>/dev/null; [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr 'execute("bdelete!")' 2>/dev/null; true; fi
   - key: '<space>'
     description: 'Switch to this worktree (nvim + shell)'
     context: 'worktrees'
-    command: 'echo "{{.SelectedWorktree.Path}}" > ~/.nvim_cwd; [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr "execute(''cd {{.SelectedWorktree.Path}}'')" 2>/dev/null; [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr ''execute("bdelete!")'' 2>/dev/null'
-
+    command: 'echo "--- $(date) ---" > /tmp/lazygit-debug.log; echo "NVIM=$NVIM" >> /tmp/lazygit-debug.log; echo "PATH={{.SelectedWorktree.Path}}" >> /tmp/lazygit-debug.log; echo "--- echo ~/.nvim_cwd ---" >> /tmp/lazygit-debug.log; echo "{{.SelectedWorktree.Path}}" > ~/.nvim_cwd 2>>/tmp/lazygit-debug.log; echo "--- nvim --remote-expr ---" >> /tmp/lazygit-debug.log; nvim --server "$NVIM" --remote-expr "execute(''cd {{.SelectedWorktree.Path}}'')" >>/tmp/lazygit-debug.log 2>&1; echo "--- exit $? ---" >> /tmp/lazygit-debug.log; true'
   - key: 'p'
     description: 'Promote worktree (wt promote)'
     context: 'worktrees'
     command: >-
-      BRANCH=$(git branch --show-current);
-      PRIMARY=$(git worktree list | awk 'NR==1{print $1}');
-      echo "$PRIMARY" > ~/.nvim_cwd;
-      nohup sh -c "sleep 2 && wt remove --no-delete-branch --yes '$BRANCH' && git -C '$PRIMARY' checkout '$BRANCH'" >/tmp/wt_promote.log 2>&1 &;
-      [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr "execute('cd $PRIMARY')" 2>/dev/null;
-      [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-send "q" 2>/dev/null
+      BRANCH=$(git branch --show-current); PRIMARY=$(git worktree list | awk 'NR==1{print $1}'); echo "$PRIMARY" > ~/.nvim_cwd; nohup sh -c "sleep 2 && wt remove --no-delete-branch --yes '$BRANCH' && git -C '$PRIMARY' checkout '$BRANCH'" >/tmp/wt_promote.log 2>&1 &; [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr "execute('cd $PRIMARY')" 2>/dev/null; [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-send "q" 2>/dev/null; true
