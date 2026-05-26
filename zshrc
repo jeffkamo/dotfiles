@@ -49,6 +49,9 @@ alias vim='nvim'
 # applies all of a repo's related worktrees to the main working branch.#
 alias reflect="python3 ~/clio/grow_tools/reflect/reflect.py"
 
+# Configuration for `wt` tool. https://github.com/max-sixty/worktrunk
+# wt is a dependency of .config/lazygit/config.yml
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
 
 # == CLIO_ANDROID_SETUP ==
 

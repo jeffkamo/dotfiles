@@ -7,7 +7,7 @@ if [[ "${CODESPACES:-}" == 'true' ]]; then
   # installation instructions roughly follow the official Neovim instructions:
   # https://github.com/neovim/neovim/wiki/Installing-Neovim#appimage-universal-linux-package
   sudo rm -rf /squashfs-root
-  curl -sSfLo  "${HOME}/tmp/nvim/nvim.appimage" --create-dirs https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  curl -sSfLo "${HOME}/tmp/nvim/nvim.appimage" --create-dirs https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
   chmod u+x "${HOME}/tmp/nvim/nvim.appimage"
   ${HOME}/tmp/nvim/nvim.appimage --appimage-extract 1>/dev/null
   sudo mv squashfs-root /
@@ -44,7 +44,9 @@ echo "== Installing prettierd, a dependency for my prettier setup ==="
 brew install fsouza/prettierd/prettierd
 
 echo "=== Installing other applications and utilities ==="
-brew install --cask alt-tab # https://alt-tab-macos.netlify.app/
-brew install sequel-ace # https://sequel-ace.com/
-brew install --cask ghostty # https://formulae.brew.sh/cask/ghostty
+brew install --cask alt-tab  # https://alt-tab-macos.netlify.app/
+brew install sequel-ace      # https://sequel-ace.com/
+brew install --cask ghostty  # https://formulae.brew.sh/cask/ghostty
 brew install --cask obsidian # https://formulae.brew.sh/cask/obsidian
+brew install worktrunk       # https://github.com/max-sixty/worktrunk
+# for `wt`, followup with `wt config shell install``
