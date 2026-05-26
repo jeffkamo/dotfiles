@@ -1,3 +1,20 @@
+# ====== Clio LLM Gateway (managed by `dev`) ======
+# Routes Claude through Clio's LLM gateway by setting ANTHROPIC_BASE_URL and
+# ANTHROPIC_AUTH_TOKEN from the local token file.
+#
+#   Gateway: https://llm-gateway.clio.systems/
+#   Help:    #pt-llm-gateway on Slack
+#   Refresh: `dev login --force`
+#
+# Edits to this block will be overwritten.
+__clio_llm_gateway_token_path="$HOME/.clio/llm-gateway-token"
+if [ -f "$__clio_llm_gateway_token_path" ]; then
+  export ANTHROPIC_BASE_URL="${LLM_GATEWAY_URL:-https://llm-gateway.clio.systems}"
+  export ANTHROPIC_AUTH_TOKEN="$(cat "$__clio_llm_gateway_token_path")"
+fi
+unset __clio_llm_gateway_token_path
+# ====== End Clio LLM Gateway ======
+
 export ZSH="$HOME/.oh-my-zsh"
 
 # Custom paths
@@ -27,6 +44,10 @@ setopt nomenucomplete
 # Some Neovim stuff
 export EDITOR='nvim'
 alias vim='nvim'
+
+# A Clio tool called "Reflect" which spins up a process that automatically
+# applies all of a repo's related worktrees to the main working branch.#
+alias reflect="python3 ~/clio/grow_tools/reflect/reflect.py"
 
 
 # == CLIO_ANDROID_SETUP ==
