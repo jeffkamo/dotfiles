@@ -31,15 +31,10 @@ customCommands:
       [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr "execute('cd $NEW_PATH')" 2>/dev/null;
       fi; true
 
-  - key: '<space>'
-    description: 'Switch to this worktree'
+  - key: 's'
+    description: 'Sync nvim cwd to this worktree'
     context: 'worktrees'
-    command: 'echo "{{.SelectedWorktree.Path}}" > ~/.nvim_cwd; [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr "execute(''cd {{.SelectedWorktree.Path}}'')" 2>/dev/null; true'
-
-  - key: '<enter>'
-    description: 'Switch to this worktree'
-    context: 'worktrees'
-    command: 'echo "{{.SelectedWorktree.Path}}" > ~/.nvim_cwd; [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr "execute(''cd {{.SelectedWorktree.Path}}'')" 2>/dev/null; true'
+    command: 'echo "{{.SelectedWorktree.Path}}" > ~/.nvim_cwd; [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-expr "timer_start(0, {-> execute(''cd {{.SelectedWorktree.Path}}'')})" >/dev/null 2>&1; true'
 
   - key: 'p'
     description: 'Promote worktree (wt promote)'
