@@ -186,6 +186,8 @@ export PATH="$HOME/.local/share:$PATH" # where zinit is location
 
 # Setup oh-my-posh for custom prompt goodness
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
+# Setup MISE, as installed by omarchy (so in /usr/bin instead of ~/.local/bin)
+eval "$(/usr/bin/mise activate zsh)"
 
 # My aliases
 export EDITOR='nvim'
@@ -199,3 +201,4 @@ alias ll='eza -lh --icons=auto --group-directories-first'
 # I think this is related to TMUX stuff
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
