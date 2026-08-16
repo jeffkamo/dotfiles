@@ -12,9 +12,10 @@ Branch: `feat/multi-env-dotfiles`. Nothing lands on `main` until the user
 reviews and merges.
 
 ## 0. Prerequisite: bump the dotbot submodule
-- [ ] Bump `dotbot` submodule from `d2f76a25` (v1.19) to current upstream (v1.24), commit gitlink
-- [ ] Sanity-check directive set still behaves under v1.24; confirm `--dry-run` works
-- [ ] Fix `omarchy/themes/{aetheria,coppernight}` gitlinks with no `.gitmodules` entries
+- [x] Bump `dotbot` submodule from `d2f76a25` (v1.19) to v1.24.1, commit gitlink
+- [x] Confirmed `-c` accepts multiple files and `-n/--dry-run` exists in v1.24.1
+- [x] Fixed `omarchy/themes/{aetheria,coppernight}` gitlinks — both were empty
+      with no known upstream, `git rm --cached` rather than guessing a URL
 
 ## 1. Split `install.conf.yaml` into common + per-env dotbot configs
 - [ ] Write `install.common.yaml`
