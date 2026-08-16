@@ -18,19 +18,35 @@ reviews and merges.
       with no known upstream, `git rm --cached` rather than guessing a URL
 
 ## 1. Split `install.conf.yaml` into common + per-env dotbot configs
-- [ ] Write `install.common.yaml`
-- [ ] Write `install.omarchy3.yaml`
-- [ ] Write `install.omarchy4.yaml`
-- [ ] Write `install.fedora.yaml`
-- [ ] Write `install.mac.yaml`
-- [ ] Verify via `--dry-run` diff against old `install.conf.yaml` (omarchy3 path)
-- [ ] Delete superseded `install.conf.yaml`
+- [x] Write `install.common.yaml`
+- [x] Write `install.omarchy3.yaml`
+- [x] Write `install.omarchy4.yaml`
+- [x] Write `install.fedora.yaml`
+- [x] Write `install.mac.yaml`
+- [x] Verify via `--dry-run` diff against old `install.conf.yaml` (omarchy3 path) —
+      matches exactly plus the new lazygit line, as expected
+- [x] Delete superseded `install.conf.yaml`
+
+**Deviation from plan (approved via AskUserQuestion mid-execution):** kept
+`nvim` and `gitconfig` OUT of `install.common.yaml`, matching today's
+actual (commented-out) behavior rather than the plan's literal text —
+`nvim` had an explicit "use Omarchy defaults" rationale in the old file
+that the plan text seems to have missed; `gitconfig` just followed suit
+for consistency. See git log for this branch around this point.
+
+**Correction to plan's dotbot invocation:** the plan's example command
+(`-c install.common.yaml -c install.omarchy.yaml`, repeated `-c` flags)
+does NOT work — argparse's `store` action makes a second `-c` overwrite
+the first rather than append, so only the last file's directives run.
+Verified this empirically. Correct form: **one** `-c` flag with
+space-separated files (`-c install.common.yaml install.omarchy3.yaml`).
+This matters for the `install` script in §4 — don't repeat `-c`.
 
 ## 2. Move directory-based configs under nested per-env dirs
-- [ ] hypr: `git mv` top-level `hypr/*.conf` → `hypr/omarchy3/` (explicit files, not glob)
-- [ ] hypr: drop committed `.bak.*` junk during the move
+- [x] hypr: `git mv` top-level `hypr/*.conf` → `hypr/omarchy3/` (explicit files, not glob)
+- [x] hypr: drop committed `.bak.*` junk during the move
 - [ ] hypr: seed `hypr/omarchy4/` from live `~/.config/hypr`
-- [ ] omarchy: `git mv` `omarchy/{branding,current,hooks,themes}` → `omarchy/omarchy3/`
+- [x] omarchy: `git mv` `omarchy/{branding,current,hooks,themes}` → `omarchy/omarchy3/`
 - [ ] omarchy: seed `omarchy/omarchy4/` from live `~/.config/omarchy`
 - [ ] ghostty: seed `ghostty/omarchy4/config` from live `~/.config/ghostty/config`
 - [ ] lazygit: create empty `lazygit/config.yml` baseline (matches live empty state)
