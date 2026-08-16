@@ -1,0 +1,12 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- clean: ['~', '~/.config']
+
+- link:
+    ~/.config/ohmyposh:
+    ~/.tmux/plugins/tmux-sensible:
+    ~/.tmux/plugins/tpm:
+    ~/.zsh/plugins/zsh-autocomplete:

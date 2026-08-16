@@ -1,0 +1,15 @@
+- link:
+    ~/.zshrc:
+    ~/.tmux.conf:
+    ~/.config/hypr:
+      path: hypr/omarchy4
+    ~/.config/ghostty/config:
+      path: ghostty/omarchy4/config
+    ~/.config/lazygit/config.yml:
+      path: lazygit/config.yml
+    ~/.config/waybar:
+    ~/.config/omarchy:
+      path: omarchy/omarchy4
+    /etc/keyd/default.conf:
+      # This one might have be to run with sudo
+      path: "keyd/default.conf"

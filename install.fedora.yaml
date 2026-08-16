@@ -1,0 +1,13 @@
+- link:
+    ~/.zshrc:
+    ~/.tmux.conf:
+    ~/.config/hypr:
+      path: hypr/fedora
+    ~/.config/ghostty:
+    ~/.config/lazygit/config.yml:
+      path: lazygit/config.yml
+    ~/.config/waybar:
+      path: waybar/fedora
+    /etc/keyd/default.conf:
+      # This one might have be to run with sudo
+      path: "keyd/default.conf"
