@@ -73,29 +73,81 @@ This matters for the `install` script in §4 — don't repeat `-c`.
 - [x] Leave `temporary-mac-config` branch in place (do not delete)
 
 ## 4. `install` script: `-e/--env`, `--force`, `--clean`, env lock
-- [ ] Arg parsing (`-e/--env`, `--force`, `--clean`, `-h/--help`)
-- [ ] Usage/error when `-e` missing or unknown env
-- [ ] `.installed-env` write-after-success + read-and-compare guard
-- [ ] `.gitignore` added (`.installed-env`, `.DS_Store`, `*.bak.*`)
-- [ ] `--clean` symlink-scan implementation
-- [ ] Guard message text matches plan
+- [x] Arg parsing (`-e/--env`, `--force`, `--clean`, `-h/--help`)
+- [x] Usage/error when `-e` missing or unknown env
+- [x] `.installed-env` write-after-success + read-and-compare guard
+- [x] `.gitignore` added (`.installed-env`, `.DS_Store`, `*.bak.*`)
+- [x] `--clean` symlink-scan implementation
+- [x] Guard message text matches plan
+
+**Implementation note:** `--force` can't be a bare `defaults: {link:
+{force: true}}` override — dotbot's `defaults` directive *replaces*
+wholesale rather than merging (confirmed in dispatcher.py), so a bare
+force-only override would silently drop `relink`/`create` too. Added
+`install.force.yaml` with the full `{relink, create, force}` triple,
+inserted between `install.common.yaml` and the env file only when
+`--force` is passed.
+
+**Tested (all read-only or against an isolated fake `$HOME` under
+`/tmp`, never the real one):** `--help`, missing `-e`, unknown env,
+`-n` passthrough resolving all four envs cleanly, the switch-guard
+blocking and `--force` bypassing it (using a manually-seeded
+`.installed-env`, not a real install), `install.force.yaml` actually
+landing in the composed `-c` args (checked via `bash -x`), and
+`clean_repo_symlinks()` against a synthetic `$HOME` with a mix of
+repo-symlinks / unrelated-symlinks / real files — only the repo
+symlinks were removed. Found and fixed one real bug: `.installed-env`
+was being written even on a dry-run.
 
 ## 5. `README.md`
-- [ ] Update "How to run" to `./install -e <env>`
-- [ ] Document `--force`/`--clean`/`.installed-env`
-- [ ] Resolve `run/` script naming mismatch (rename vs. thin wrappers) and document
+- [x] Update "How to run" to `./install -e <env>`
+- [x] Document `--force`/`--clean`/`.installed-env`
+- [x] Resolve `run/` script naming mismatch — renamed `run/macos` → `run/mac`,
+      documented that `run/omarchy` currently serves both omarchy3 and omarchy4
 
 ## Rollout / verification order
 - [x] 1. Branch + progress tracking (this file, this commit)
-- [ ] 2. Bump dotbot submodule, confirm multi-`-c` + `--dry-run`
-- [ ] 3. Land common/per-env yaml split, `--dry-run` no-op check, delete old file
-- [ ] 4. `git mv` hypr → omarchy3, omarchy → omarchy3, wire up, no-op check
-- [ ] 5. Seed omarchy4 from live state (hypr, omarchy, ghostty, lazygit), wire into yaml
-- [ ] 6. Add mac-specific files, wire into `install.mac.yaml`
-- [ ] 7. Update `install` script + `.gitignore` + README
-- [ ] 8. Test env-lock guard without touching filesystem
-- [ ] 9. First real run on this box (`--force`, backup-and-diff verification)
-- [ ] 10. Confirm mac-branch diff clean; leave `temporary-mac-config` in place
+- [x] 2. Bump dotbot submodule, confirm multi-`-c` + `--dry-run`
+- [x] 3. Land common/per-env yaml split, `--dry-run` no-op check, delete old file
+- [x] 4. `git mv` hypr → omarchy3, omarchy → omarchy3, wire up, no-op check
+- [x] 5. Seed omarchy4 from live state (hypr, omarchy, ghostty, lazygit), wire into yaml
+- [x] 6. Add mac-specific files, wire into `install.mac.yaml`
+- [x] 7. Update `install` script + `.gitignore` + README
+- [x] 8. Test env-lock guard without touching filesystem
+- [ ] 9. First real run on this box (`--force`, backup-and-diff verification) —
+      **BLOCKED, stopped and flagged to user**: this step inherently writes
+      into `$HOME` (replacing `~/.config/{hypr,omarchy,ghostty,lazygit}`
+      with symlinks), which conflicts with the explicit instruction "make
+      sure no files outside the repo are modified" for this session. All
+      repo-side work is done and verified via `--dry-run`/`bash -x`/isolated
+      fake-`$HOME` tests; nothing outside the repo has been touched. Waiting
+      on the user to say go before actually running `./install --force -e
+      omarchy4` for real.
+- [x] 10. Confirm mac-branch diff clean; leave `temporary-mac-config` in place
+      (done as part of §3 above)
 
 ## Notes / deviations from plan
-(none yet)
+
+Summary list — full detail is inline under each section above:
+
+1. Kept `nvim` and `gitconfig` out of `install.common.yaml` (§1), deviating
+   from the plan's literal text, after confirming with the user — matches
+   today's actual (deliberately commented-out) behavior instead.
+2. The plan's example dotbot invocation (repeated `-c file1 -c file2`)
+   doesn't work — argparse overwrites rather than appends. Correct form
+   is one `-c` with space-separated files. Affects §1 and §4.
+3. dotbot's dry-run prints "Would remove X" for real (non-symlink)
+   targets unconditionally, regardless of `force` — a dry-run-only
+   quirk, not a sign the real force-gate is bypassed. See §2.
+4. `run/macos` (now `run/mac`) was missing `brew install worktrunk`,
+   a real dependency of `zshrc.mac`/`lazygit.mac`. Added. See §3.
+5. `--force` needed its own full `defaults:` override file
+   (`install.force.yaml`) rather than a bare `force: true`, since
+   dotbot's `defaults:` replaces wholesale rather than merging. See §4.
+6. Found and fixed a bug in my own first draft of `install`: it wrote
+   `.installed-env` even on a `-n`/dry-run invocation. See §4.
+7. **Rollout step 9 (the first real live run) is intentionally not
+   done.** It requires writing into `$HOME`, which conflicts with this
+   session's explicit "no files outside the repo modified" instruction.
+   Stopped and flagged to the user rather than proceeding. Everything
+   up to that point is complete and verified without touching `$HOME`.
