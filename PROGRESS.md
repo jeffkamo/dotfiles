@@ -45,20 +45,32 @@ This matters for the `install` script in §4 — don't repeat `-c`.
 ## 2. Move directory-based configs under nested per-env dirs
 - [x] hypr: `git mv` top-level `hypr/*.conf` → `hypr/omarchy3/` (explicit files, not glob)
 - [x] hypr: drop committed `.bak.*` junk during the move
-- [ ] hypr: seed `hypr/omarchy4/` from live `~/.config/hypr`
+- [x] hypr: seed `hypr/omarchy4/` from live `~/.config/hypr`
 - [x] omarchy: `git mv` `omarchy/{branding,current,hooks,themes}` → `omarchy/omarchy3/`
-- [ ] omarchy: seed `omarchy/omarchy4/` from live `~/.config/omarchy`
-- [ ] ghostty: seed `ghostty/omarchy4/config` from live `~/.config/ghostty/config`
-- [ ] lazygit: create empty `lazygit/config.yml` baseline (matches live empty state)
-- [ ] waybar: left as-is (no fork needed yet) — confirm still true
+- [x] omarchy: seed `omarchy/omarchy4/` from live `~/.config/omarchy`
+- [x] ghostty: seed `ghostty/omarchy4/config` from live `~/.config/ghostty/config`
+- [x] lazygit: create empty `lazygit/config.yml` baseline (matches live empty state)
+- [x] waybar: left as-is (no fork needed yet) — confirmed still true (no v4 diff observed)
+- [x] Verified all four envs (`omarchy3`, `omarchy4`, `fedora`, `mac`) resolve cleanly via
+      `dotbot -n` (dry-run) — no "Nonexistent target" warnings, all sources exist.
+      Note: dry-run prints "Would remove X" for real (non-symlink) targets
+      unconditionally, regardless of `force` — that's a dry-run-only quirk (see
+      `_delete()` in dotbot's link.py); the actual force-gate on a real run still
+      applies, so finding #3 / rollout step 9 remain accurate. No files outside
+      the repo were touched — confirmed via `stat` on all four live `~/.config`
+      targets after every dry-run.
 
 ## 3. Port mac-specific files as flat `<name>.<env>` siblings
-- [ ] `zshrc.mac` from `temporary-mac-config`
-- [ ] `tmux.mac.conf` from `temporary-mac-config`
-- [ ] `lazygit.mac/config.yml` from `temporary-mac-config`, wired to macOS Application Support path
-- [ ] Skip `.bash_profile` (confirmed redundant)
-- [ ] Final full-file diff of `temporary-mac-config` vs `main` to confirm nothing else missed
-- [ ] Leave `temporary-mac-config` branch in place (do not delete)
+- [x] `zshrc.mac` from `temporary-mac-config` (byte-identical, diff-verified)
+- [x] `tmux.mac.conf` from `temporary-mac-config` (byte-identical, diff-verified)
+- [x] `lazygit.mac/config.yml` from `temporary-mac-config`, wired to macOS Application Support path
+- [x] Skip `.bash_profile` (confirmed redundant)
+- [x] Final full-file diff of `temporary-mac-config` vs `main` to confirm nothing else missed —
+      clean; only other unaccounted item found was mac's old `install` script
+      (pre-dates the run/ script split, superseded) except one real gap: it had
+      `brew install worktrunk`, which run/macos was missing even though
+      zshrc.mac and lazygit.mac both depend on `wt` — added to run/macos.
+- [x] Leave `temporary-mac-config` branch in place (do not delete)
 
 ## 4. `install` script: `-e/--env`, `--force`, `--clean`, env lock
 - [ ] Arg parsing (`-e/--env`, `--force`, `--clean`, `-h/--help`)
