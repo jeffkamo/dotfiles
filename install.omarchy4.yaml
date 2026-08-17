@@ -11,15 +11,15 @@
     ~/.config/tmux/tmux.conf:
       path: tmux/omarchy4/tmux.conf
     ~/.config/ohmyposh:
-    ~/.tmux/plugins/tmux-sensible:
-    ~/.tmux/plugins/tpm:
+    ~/.config/nvim:
+      path: nvim/common
+    # ~/.tmux/plugins/tmux-sensible:
+    # ~/.tmux/plugins/tpm:
     ~/.zsh/plugins/zsh-autocomplete:
     ~/.config/ghostty:
       path: ghostty/omarchy4
     ~/.config/hypr:
       path: hypr/omarchy4
-    ~/.config/waybar:
-      path: waybar/common
     ~/.config/omarchy:
       path: omarchy/omarchy4
     ~/.config/lazygit/config.yml:
