@@ -11,6 +11,7 @@
     ~/.config/tmux/tmux.conf:
       path: tmux/omarchy4/tmux.conf
     ~/.config/ohmyposh:
+      path: ohmyposh/common
     ~/.config/nvim:
       path: nvim/common
     # ~/.tmux/plugins/tmux-sensible:

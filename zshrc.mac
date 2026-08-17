@@ -15,9 +15,16 @@ export PATH="$HOME/.local/bin:$PATH"
 # Clio dev command stuff. Disable if the machine is not for Clio
 eval "$(dev _hook)"
 
-# Set ZSH configs
-ZSH_THEME="robbyrussell"
+# Set ZSH configs. ZSH_THEME is empty because oh-my-posh owns the prompt
+# below; a non-empty theme makes oh-my-zsh set PROMPT for nothing.
+ZSH_THEME=""
 source $ZSH/oh-my-zsh.sh
+
+# Custom prompt, matching omarchy. This MUST come after oh-my-zsh.sh, which
+# sets PROMPT itself and would otherwise clobber oh-my-posh's.
+if command -v oh-my-posh >/dev/null 2>&1; then
+  eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
+fi
 
 # Make autocomplete more like Bash
 # http://serverfault.com/questions/109207/how-do-i-make-zsh-completion-act-more-like-bash-completion

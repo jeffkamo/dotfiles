@@ -1,0 +1,9 @@
+# Nerd Font is required: ohmyposh/mac/config.toml renders U+F179 (Apple logo)
+# and U+E0A0 (git branch). macOS ships no Nerd Font, so without this the
+# prompt shows tofu boxes. Installed by run/mac.
+font-family = CaskaydiaMono Nerd Font
+
+# Deliberately no font-size here. Omarchy sets 9, which is unreadable on a
+# Retina display; Ghostty's macOS default is correct.
+
+keybind = global:ctrl+grave_accent=toggle_quick_terminal

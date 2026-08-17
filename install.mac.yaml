@@ -9,13 +9,28 @@
 - link:
     ~/.zshrc:
       path: zshrc.mac
+    ~/.bash_profile:
+      # NOT the root `bash_profile`, which is a one-line "use .zshrc instead"
+      # stub. This machine's bash_profile has real content.
+      path: bash_profile.mac
+    ~/.gitconfig:
+      # NOT the root `gitconfig`: that sets `helper = !/usr/bin/gh`, a Linux
+      # path. On macOS gh lives in /opt/homebrew/bin, and the empty `helper =`
+      # preceding it would clear the osxkeychain helper that
+      # /opt/homebrew/etc/gitconfig sets.
+      path: gitconfig.mac
     ~/.tmux.conf:
       path: tmux.mac.conf
     ~/.config/ohmyposh:
+      path: ohmyposh/mac
+    ~/.config/nvim:
+      # NOT nvim/common: that drops the FocusLost/FocusGained dimming that
+      # tmux.mac.conf's `focus-events on` drives, and its lua/plugins/theme.lua
+      # is a symlink into omarchy's state directory.
+      path: nvim/mac
     ~/.tmux/plugins/tmux-sensible:
     ~/.tmux/plugins/tpm:
-    ~/.zsh/plugins/zsh-autocomplete:
     ~/.config/ghostty:
-      path: ghostty/common
+      path: ghostty/mac
     "~/Library/Application Support/lazygit/config.yml":
       path: lazygit/mac/config.yml

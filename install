@@ -48,6 +48,7 @@ while [[ $# -gt 0 ]]; do
       ENV="$2"; shift 2 ;;
     --clean) CLEAN=1; shift ;;
     -h|--help) usage; exit 0 ;;
+    --) shift; break ;; # consume the separator; the rest is dotbot's
     *) break ;; # everything else passes through to dotbot
   esac
 done
@@ -109,10 +110,13 @@ if [[ "${CLEAN}" -eq 1 ]]; then
   clean_repo_symlinks
 fi
 
-echo "=== Installing dotbot as a git submodule ==="
+echo "=== Initializing git submodules ==="
 cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
-git submodule update --init --recursive "${DOTBOT_DIR}"
+# Every submodule, not just dotbot. tpm, tmux-sensible, and zsh-autocomplete are
+# link targets: an uninitialized submodule is an empty directory, and dotbot's
+# source-exists check passes on one, so it silently links to nothing.
+git submodule update --init --recursive
 
 echo "=== Running dotbot for environment '${ENV}' ==="
 set +e

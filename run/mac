@@ -11,6 +11,15 @@ brew install sequel-ace # https://sequel-ace.com/
 brew install --cask ghostty # https://formulae.brew.sh/cask/ghostty
 brew install --cask obsidian # https://formulae.brew.sh/cask/obsidian
 brew install worktrunk # https://github.com/max-sixty/worktrunk — provides `wt`, used by zshrc.mac and lazygit.mac/config.yml
+brew install jandedobbeleer/oh-my-posh/oh-my-posh # prompt, initialized by zshrc.mac from ohmyposh/mac/config.toml
 
-echo "=== Installing ripgrep, a dependency of Telescope live-grep ==="
-sudo apt-get install ripgrep
+# ghostty/mac/config sets this as font-family. macOS ships no Nerd Font, so
+# without it the oh-my-posh prompt glyphs render as tofu boxes. The name must
+# match ghostty/mac/config exactly. If the cask 404s, run `brew search caskaydia`.
+brew install --cask font-caskaydia-mono-nerd-font
+
+# Kept for reference, not run: this is the Debian/Ubuntu package manager, which
+# does not exist on macOS. `set -e` above means calling it aborts the script.
+# ripgrep (a dependency of Telescope live-grep) is installed by brew on line 8.
+# echo "=== Installing ripgrep, a dependency of Telescope live-grep ==="
+# sudo apt-get install ripgrep
