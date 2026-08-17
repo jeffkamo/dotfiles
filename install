@@ -13,34 +13,32 @@ available_envs() {
     name="$(basename "${f}")"
     name="${name#install.}"
     name="${name%.yaml}"
-    [[ "${name}" == "common" || "${name}" == "force" || "${name}" == "defaults" ]] && continue
     echo "${name}"
   done
 }
 
 usage() {
   cat <<EOF
-Usage: ./install -e <env> [--force] [--clean] [-- <dotbot args>]
+Usage: ./install -e <env> [--clean] [-- <dotbot args>]
 
   -e, --env ENV   Environment to install (required). One of:
 $(available_envs | sed 's/^/                    /')
-  --force         Bypass the environment-switch guard, and force-replace
-                  existing real files/directories with symlinks.
   --clean         Remove this repo's symlinks (under ~, ~/.config,
                   ~/.tmux/plugins, ~/.zsh/plugins, ~/Library/Application
-                  Support/lazygit, /etc/keyd) before installing.
+                  Support/lazygit, /etc/keyd) before installing. Also
+                  required when switching to a different environment
+                  than the one currently installed (see below).
   -h, --help      Show this message.
 
 State: the last successfully installed environment is recorded in
-.installed-env. Installing a different environment without --force is
-blocked, since dotbot's \`clean\` only removes broken symlinks -- a valid
-symlink left over from a previous environment would otherwise be
-silently neither replaced nor removed.
+.installed-env. Installing a different environment requires --clean,
+since dotbot's \`clean\` only removes broken symlinks -- a valid symlink
+left over from a previous environment would otherwise be silently
+neither replaced nor removed.
 EOF
 }
 
 ENV=""
-FORCE=0
 CLEAN=0
 
 while [[ $# -gt 0 ]]; do
@@ -48,7 +46,6 @@ while [[ $# -gt 0 ]]; do
     -e|--env)
       [[ $# -ge 2 ]] || { echo "error: -e/--env requires a value" >&2; usage >&2; exit 1; }
       ENV="$2"; shift 2 ;;
-    --force) FORCE=1; shift ;;
     --clean) CLEAN=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) break ;; # everything else passes through to dotbot
@@ -70,7 +67,7 @@ CONFIG="${BASEDIR}/install.${ENV}.yaml"
 
 if [[ -f "${ENV_STATE}" ]]; then
   PREV_ENV="$(cat "${ENV_STATE}")"
-  if [[ "${PREV_ENV}" != "${ENV}" && "${FORCE}" -ne 1 ]]; then
+  if [[ "${PREV_ENV}" != "${ENV}" && "${CLEAN}" -ne 1 ]]; then
     cat <<EOF >&2
 You are attempting to install for a different environment.
   Previously installed: ${PREV_ENV}
@@ -81,7 +78,7 @@ removes *broken* links, and a link like ~/.config/hypr -> ${PREV_ENV}'s
 source is still valid, so it will neither be replaced nor removed.
 
 If you want to do this, run:
-  ./install --force --clean -e ${ENV}
+  ./install --clean -e ${ENV}
 EOF
     exit 1
   fi
@@ -117,16 +114,9 @@ cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-if [[ "${FORCE}" -eq 1 ]]; then
-  DOTBOT_CONFIGS=("${BASEDIR}/install.force.yaml")
-else
-  DOTBOT_CONFIGS=("${BASEDIR}/install.defaults.yaml")
-fi
-DOTBOT_CONFIGS+=("${BASEDIR}/install.common.yaml" "${CONFIG}")
-
 echo "=== Running dotbot for environment '${ENV}' ==="
 set +e
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${DOTBOT_CONFIGS[@]}" "${@}"
+"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
 DOTBOT_RC=$?
 set -e
 

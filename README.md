@@ -10,10 +10,16 @@ Installation managed by <a href="https://github.com/anishathalye/dotbot">dotbot<
 ./install -e <omarchy3|omarchy4|mac|fedora>
 ```
 
-`-e`/`--env` is required — it selects which `install.<env>.yaml` gets
-composed with the shared `install.common.yaml`. There's no default, on
-purpose: better to fail loudly than silently link the wrong environment's
-config.
+`-e`/`--env` is required — each `install.<env>.yaml` is fully
+self-contained (no shared config file to compose it with). There's no
+default, on purpose: better to fail loudly than silently link the wrong
+environment's config.
+
+Every link is set up with dotbot's `backup: true`, so a real file or
+directory standing where a symlink should go gets renamed aside to
+`<path>.dotbot-backup.<timestamp>` instead of touched destructively.
+That only fires the first time (later runs just relink), so it's safe to
+leave on permanently — there's no separate "force" flag.
 
 Note that some symlinks may need to be run using `sudo` (i.e. the ones created in `/etc`),
 in which case do this instead:
@@ -33,14 +39,14 @@ at `hypr/omarchy3`) would otherwise be silently left in place instead of
 replaced. If you actually want to switch, do what the error message says:
 
 ```bash
-./install --force --clean -e <new-env>
+./install --clean -e <new-env>
 ```
 
-- `--force` bypasses the switch guard and lets dotbot replace existing
-  real files/directories (not just broken symlinks) with new ones.
-- `--clean` removes this repo's own symlinks first, so nothing from the
-  old environment is left behind even if the new environment doesn't
-  declare that path at all.
+`--clean` removes this repo's own symlinks first, so nothing from the old
+environment is left behind even if the new environment doesn't declare
+that path at all — this is also what's required to get past the
+switch-guard, since it's exactly what resolves the problem the guard is
+warning about.
 
 Any other flags (e.g. `-n`/`--dry-run`, `-v`) are passed straight through
 to dotbot.
@@ -63,21 +69,22 @@ them apart as real per-version package differences show up.
 
 ## Directory conventions
 
-Apps whose config differs by environment (`hypr/`, `omarchy/`, `ghostty/`,
-`waybar/`) live under nested per-env subdirectories, e.g. `hypr/omarchy3/`,
-`hypr/omarchy4/`. **An env yaml may only link a leaf directory under an
-app directory — never the app directory itself** (e.g.
-`~/.config/ghostty` → `ghostty/omarchy4`, never → `ghostty`). This is
-what makes switching environments with `--force` a plain symlink-to-symlink
-relink instead of ever writing through a stale symlink into the repo.
-`default/` (e.g. `ghostty/default/`, `waybar/default/`) is the
-subdirectory used by every environment that doesn't have its own override
-— distinct from `install.common.yaml`, which means "all four
-environments," not "unless overridden."
-
-Single-file configs that vary by environment (`zshrc`, `tmux.conf`) use a
-flat `<name>.<env>` sibling instead (e.g. `zshrc.mac`), since there's no
-app directory to nest under.
+- **App directories** (`hypr/`, `omarchy/`, `ghostty/`, `waybar/`,
+  `lazygit/`) use `<app>/<env>/` and `<app>/common/`, where `common`
+  means "shared by more than one environment" — e.g. `hypr/omarchy3/`,
+  `hypr/omarchy4/`, `ghostty/common/`. Nothing is a fallback or an
+  override: every env yaml names its source directory explicitly.
+- **An env yaml may only link a leaf directory under an app directory —
+  never the app directory itself** (e.g. `~/.config/ghostty` →
+  `ghostty/omarchy4`, never → `ghostty`). This is what makes switching
+  environments a plain symlink-to-symlink relink instead of ever writing
+  through a stale symlink into the repo.
+- **Bare top-level dotfiles** with no app directory (`zshrc`, `tmux.conf`)
+  use a flat `<name>.<env>` sibling instead (e.g. `zshrc.mac`), since
+  there's no app directory to nest under.
+- No yaml file uses the words `common` or `default` in its own name —
+  those words describe directories, not `install.*.yaml` files. Every
+  `install.<env>.yaml` is self-contained.
 
 ## Themes
 

@@ -1,7 +1,0 @@
-- clean: ['~', '~/.config']
-
-- link:
-    ~/.config/ohmyposh:
-    ~/.tmux/plugins/tmux-sensible:
-    ~/.tmux/plugins/tpm:
-    ~/.zsh/plugins/zsh-autocomplete:

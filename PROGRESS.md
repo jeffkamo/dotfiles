@@ -17,6 +17,11 @@ reviews and merges.
 - [x] Fixed `omarchy/themes/{aetheria,coppernight}` gitlinks — both were empty
       with no known upstream, `git rm --cached` rather than guessing a URL
 
+**Superseded by §6.0 below** (a later plan rewrite removed the shared
+`install.common.yaml`/`install.force.yaml` design entirely in favor of
+fully self-contained per-env yamls). Kept here for history; §6.0 is the
+authoritative current state.
+
 ## 1. Split `install.conf.yaml` into common + per-env dotbot configs
 - [x] Write `install.common.yaml`
 - [x] Write `install.omarchy3.yaml`
@@ -72,6 +77,10 @@ This matters for the `install` script in §4 — don't repeat `-c`.
       zshrc.mac and lazygit.mac both depend on `wt` — added to run/macos.
 - [x] Leave `temporary-mac-config` branch in place (do not delete)
 
+**Superseded by §6.0/6.1/6.4/6.5/6.6 below** — `--force` and
+`install.force.yaml`/`DOTBOT_CONFIGS` composition no longer exist. Kept
+for history.
+
 ## 4. `install` script: `-e/--env`, `--force`, `--clean`, env lock
 - [x] Arg parsing (`-e/--env`, `--force`, `--clean`, `-h/--help`)
 - [x] Usage/error when `-e` missing or unknown env
@@ -126,80 +135,133 @@ was being written even on a dry-run.
 - [x] 10. Confirm mac-branch diff clean; leave `temporary-mac-config` in place
       (done as part of §3 above)
 
-## 6. Post-review fixes
+## 6. Post-review fixes + simplification
 
-Added by an external review of the branch after step 10. All 8 items
-implemented and verified against an isolated fake `$HOME` (never the
-real one) or synthetic dirs, per the plan's own testing note.
+§6 was rewritten by the user/reviewer partway through implementation:
+beyond fixing defects, it replaced the whole shared-yaml architecture
+with self-contained per-env yamls (§6.0). **§6 supersedes §1 and §4
+wherever they conflict.** All items below implemented and verified
+against an isolated fake `$HOME` (never the real one) or synthetic dirs.
 
-- [x] 6.1 (highest severity) — `-e force`/`-e common` no longer accepted;
-      validated against `available_envs()` instead of file existence.
-- [x] 6.2 — `--force` now actually reaches `install.common.yaml`'s links.
-      Split `defaults:` out of `install.common.yaml` into
-      `install.defaults.yaml`; compose defaults/force-first, then
-      common, then env.
-- [x] 6.3 — ghostty restructured to `ghostty/default/` +
-      `ghostty/omarchy4/`, both linked as leaf directories (never the
-      `ghostty/` app dir itself), so an env switch is always a
-      symlink-to-symlink relink. Verified: repo's `ghostty/default/config`
-      hash identical before/after the exact omarchy3→omarchy4
-      `--force`-no-`--clean` scenario that used to corrupt it.
-- [x] 6.4 — `--clean` now warns and skips non-writable scan dirs (e.g.
+- [x] 6.0 (the simplification, done first) — deleted
+      `install.common.yaml`, `install.force.yaml`, and the interim
+      `install.defaults.yaml`. Each `install.<env>.yaml` is now fully
+      self-contained: its own `defaults:` (with `backup: true`), its
+      own `clean:`, its own `link:`. `--force` removed entirely —
+      `backup: true` renames a real file/dir aside to
+      `<path>.dotbot-backup.<timestamp>` instead of deleting it, fires
+      only on the first run (later runs are plain relinks), and is left
+      on permanently. Flags collapse to `-e`/`--env` and `--clean` only.
+      Renamed the `default/` directory convention to `common/`
+      (`ghostty/default/` → `ghostty/common/`, `waybar/default/` →
+      `waybar/common/`) per the new naming rule: directories may say
+      `common`, no `install.*.yaml` file name may say `common` or
+      `default`. `lazygit/config.yml` → `lazygit/common/config.yml`,
+      `lazygit.mac/config.yml` → `lazygit/mac/config.yml` (brings
+      lazygit under the same app-directory convention as everything
+      else). `install` script rewritten: `DOTBOT_CONFIGS` array gone,
+      single `-c "${CONFIG}"`; `available_envs()` no longer needs an
+      exclusion list (the common/force/defaults files it used to
+      exclude don't exist anymore).
+- [x] 6.1 — `-e` validated against `available_envs()` (now trivially
+      simple, no exclusions needed) rather than file existence. Mostly
+      moot after 6.0 removed the pseudo-env files, but kept as a cheap
+      explicit check. Verified `-e force`/`-e common` still rejected.
+- [x] 6.2 — **dissolved by 6.0.** The original bug (`--force` never
+      reaching `install.common.yaml`'s links, because dotbot's
+      `defaults:` replaces wholesale and `install.force.yaml` composed
+      after common's links had already run) can't happen when there's
+      no shared yaml and no `--force`. Nothing to implement.
+- [x] 6.3 — ghostty restructured to `ghostty/common/` + `ghostty/omarchy4/`,
+      both linked as leaf directories (never the `ghostty/` app dir
+      itself), so an env switch is always a symlink-to-symlink relink.
+      Verified: repo's `ghostty/common/config` hash identical
+      before/after installing omarchy3 then switching to omarchy4 with
+      `--clean` (the scenario that used to corrupt it).
+- [x] 6.4 — `--clean` warns and skips non-writable scan dirs (e.g.
       `/etc/keyd` without sudo) instead of dying under `set -e`.
-- [x] 6.5 — `-e` as the final CLI arg now errors with usage instead of
-      dying silently on a failed `shift 2`.
-- [x] 6.6 — dotbot's exit code is now captured explicitly: failure
-      (e.g. keyd without sudo) prints a clear message and exits without
-      touching `.installed-env`; success chowns `.installed-env` to
-      `$SUDO_USER` when run via sudo, and prints a `run/<env>` follow-up.
+      Unchanged by 6.0, still correct.
+- [x] 6.5 — `-e` as the final CLI arg errors with usage instead of dying
+      silently on a failed `shift 2`. Unchanged by 6.0, still correct.
+- [x] 6.6 — dotbot's exit code captured explicitly (`set +e` / `DOTBOT_RC`
+      / `set -e`): failure (e.g. keyd without sudo) prints a clear
+      message and exits without touching `.installed-env`; success
+      chowns `.installed-env` to `$SUDO_USER` when run via sudo, and
+      prints a `run/<env>` follow-up. Updated for 6.0's single `-c
+      "${CONFIG}"` (no more `DOTBOT_CONFIGS` array).
 - [x] 6.7 — `run/omarchy` → `run/omarchy3`, `run/omarchy4` seeded as a
-      copy. `run/` now maps 1:1 onto `-e` values. README updated to
-      match (real filenames, removed the now-inaccurate mismatch
-      paragraph, documented the leaf-directory-only invariant).
-- [x] 6.8 — same `default/` treatment for `waybar/` (`waybar/default/`,
-      alongside the existing `waybar/fedora/`). `lazygit/config.yml` /
-      `lazygit.mac/config.yml` deliberately left as flat files (§3's
-      convention already covers single-file configs; not "half-and-half").
+      copy. `run/` maps 1:1 onto `-e` values. README updated (real
+      filenames, removed the mismatch paragraph, documented the
+      leaf-directory invariant). Unchanged by 6.0.
+- [x] 6.8 — folded into 6.0 above (`waybar/common/`, `lazygit/common/`,
+      `lazygit/mac/`) rather than done separately, since 6.0 introduced
+      the `common/` rename these were going to need anyway.
 
-## Rollout additions (11-15)
-- [x] 11. Applied 6.1 + 6.2 together; re-verified via fake-`$HOME` real
-      (non-dry-run) installs — `-e force`/`-e common` rejected, and
-      `--force` now correctly replaces a real `~/.config/ohmyposh`
-      while a plain run still blocks on it.
-- [x] 12. Applied 6.3–6.5, 6.7, 6.8; re-ran `dotbot -n` for all four
-      envs — no "Nonexistent target" warnings after the `default/` moves.
-- [x] 13. Applied 6.6 last, after 6.7's `run/<env>` filenames existed.
-- [x] 14. Re-confirmed the switch guard end-to-end against an isolated
-      fake `$HOME`: guard blocks a plain switch, `--force` bypasses it,
-      and `ghostty/default/config`'s hash is unchanged by an
-      omarchy3→omarchy4 `--force`-only switch.
-- [ ] 15. Rollout step 9 (first real run on this box) — **still blocked**,
+## Rollout additions (11-16)
+- [x] 11. Applied 6.0 first — deleted the shared yaml files, expanded all
+      four env yamls to be self-contained with `backup: true`, collapsed
+      flags to `-e`/`--clean`. `dotbot -n` on all four envs: clean, no
+      "Nonexistent target" warnings, `backup:` correctly shows "Would
+      backup" instead of failing on the real live directories.
+- [x] 12. Applied 6.3 (ghostty) and the folded-in 6.8 (waybar, lazygit)
+      `common/` directory moves together with 6.0, since they're the
+      same rename. Re-ran `-n` for all four envs after.
+- [x] 13. Applied 6.1, 6.4, 6.5, 6.7 (6.4/6.5/6.7 were already correct
+      from the first pass and needed no further change; 6.1 simplified
+      as noted above).
+- [x] 14. Applied 6.6 last, updated for 6.0's single-`-c` invocation.
+- [x] 15. Re-verified the guard end-to-end against an isolated fake
+      `$HOME`: seeded `.installed-env`, confirmed a plain switch is
+      refused and `--clean -e <env>` gets through; confirmed a full
+      real (non-dry-run) success path writes `.installed-env` and
+      prints the `Next:` line; confirmed `backup: true` renames a real
+      directory aside (not deleted) on first install.
+- [ ] 16. Rollout step 9 (first real run on this box) — **still blocked**,
       same as before: requires writing into the real `$HOME`, conflicts
       with this session's "no files outside the repo modified"
-      instruction. Waiting on the user's explicit go-ahead.
+      instruction. Waiting on the user's explicit go-ahead. **Now
+      materially safer than originally planned** — `backup: true` means
+      an unexpected mismatch renames the live config aside instead of
+      deleting it, so the manual `cp -r ... .orig` belt-and-braces step
+      from the original plan is optional rather than essential.
 
 ## Notes / deviations from plan
 
 Summary list — full detail is inline under each section above:
 
-1. Kept `nvim` and `gitconfig` out of `install.common.yaml` (§1), deviating
-   from the plan's literal text, after confirming with the user — matches
-   today's actual (deliberately commented-out) behavior instead.
+1. ~~Kept `nvim` and `gitconfig` out of `install.common.yaml` (§1)~~ —
+   **superseded**: `install.common.yaml` no longer exists (§6.0). The
+   underlying decision still holds though — `nvim` and `gitconfig`
+   deliberately don't appear in any `install.<env>.yaml`, matching
+   today's actual behavior.
 2. The plan's example dotbot invocation (repeated `-c file1 -c file2`)
    doesn't work — argparse overwrites rather than appends. Correct form
-   is one `-c` with space-separated files. Affects §1 and §4.
+   is one `-c` with space-separated files. No longer relevant to the
+   `install` script itself post-§6.0 (single file, single `-c`), but
+   worth remembering if a shared yaml is ever reintroduced.
 3. dotbot's dry-run prints "Would remove X" for real (non-symlink)
    targets unconditionally, regardless of `force` — a dry-run-only
-   quirk, not a sign the real force-gate is bypassed. See §2.
+   quirk, not a sign the real force-gate is bypassed. See §2. (Post-§6.0
+   this manifests as dry-run's "Would backup" line instead — same
+   underlying quirk, harmless.)
 4. `run/macos` (now `run/mac`) was missing `brew install worktrunk`,
    a real dependency of `zshrc.mac`/`lazygit.mac`. Added. See §3.
-5. `--force` needed its own full `defaults:` override file
-   (`install.force.yaml`) rather than a bare `force: true`, since
-   dotbot's `defaults:` replaces wholesale rather than merging. See §4.
+5. ~~`--force` needed its own full `defaults:` override file~~ —
+   **superseded**: `--force` and `install.force.yaml` were both deleted
+   in §6.0, replaced by `backup: true` in each env's own `defaults:`.
 6. Found and fixed a bug in my own first draft of `install`: it wrote
-   `.installed-env` even on a `-n`/dry-run invocation. See §4.
-7. **Rollout step 9 (the first real live run) is intentionally not
+   `.installed-env` even on a `-n`/dry-run invocation. See §4/§6.6 —
+   this fix carried forward unchanged through the §6.0 rewrite.
+7. **Rollout step 9/16 (the first real live run) is intentionally not
    done.** It requires writing into `$HOME`, which conflicts with this
    session's explicit "no files outside the repo modified" instruction.
    Stopped and flagged to the user rather than proceeding. Everything
    up to that point is complete and verified without touching `$HOME`.
+8. **Testing limitation, not a bug:** none of the sandboxed/fake-`$HOME`
+   test runs in this environment can get a full end-to-end success
+   through the real `/etc/keyd` link, since that requires actual root
+   and this session never uses real `sudo`. Worked around by using a
+   throwaway, uncommitted `install.testonly.yaml` (no keyd link) to
+   verify the full-success path (`.installed-env` write, `chown`,
+   `Next:` message, `backup:` renaming a real dir aside) — deleted
+   immediately after each use, never committed.
