@@ -8,7 +8,11 @@ brew install fsouza/prettierd/prettierd
 brew install ripgrep
 brew install --cask alt-tab # https://alt-tab-macos.netlify.app/
 brew install sequel-ace # https://sequel-ace.com/
-brew install --cask ghostty # https://formulae.brew.sh/cask/ghostty
+# Ghostty was installed outside brew, so /Applications/Ghostty.app exists but
+# brew does not track it. `brew install --cask ghostty` refuses to overwrite an
+# app it did not install, and `set -e` above turns that into an abort that skips
+# every line below. Install it from https://ghostty.org instead.
+# brew install --cask ghostty
 brew install --cask obsidian # https://formulae.brew.sh/cask/obsidian
 brew install worktrunk # https://github.com/max-sixty/worktrunk — provides `wt`, used by zshrc.mac and lazygit.mac/config.yml
 brew install jandedobbeleer/oh-my-posh/oh-my-posh # prompt, initialized by zshrc.mac from ohmyposh/mac/config.toml
