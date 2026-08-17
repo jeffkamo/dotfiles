@@ -4,6 +4,7 @@
     ~/.config/hypr:
       path: hypr/fedora
     ~/.config/ghostty:
+      path: ghostty/default
     ~/.config/lazygit/config.yml:
       path: lazygit/config.yml
     ~/.config/waybar:

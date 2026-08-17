@@ -4,9 +4,11 @@
     ~/.config/hypr:
       path: hypr/omarchy3
     ~/.config/ghostty:
+      path: ghostty/default
     ~/.config/lazygit/config.yml:
       path: lazygit/config.yml
     ~/.config/waybar:
+      path: waybar/default
     ~/.config/omarchy:
       path: omarchy/omarchy3
     /etc/keyd/default.conf:

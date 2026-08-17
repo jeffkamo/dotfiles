@@ -4,5 +4,6 @@
     ~/.tmux.conf:
       path: tmux.mac.conf
     ~/.config/ghostty:
+      path: ghostty/default
     "~/Library/Application Support/lazygit/config.yml":
       path: lazygit.mac/config.yml
