@@ -51,19 +51,33 @@ Then run any of the shell scripts under `/run` as necessary. `run/global`
 should come after the environment-specific script:
 
 ```bash
-sh ./run/omarchy3   # or omarchy4, mac, fedora — see below
+sh ./run/omarchy4   # or ./run/omarchy3, ./run/mac, ./run/fedora
 sh ./run/global
 sh ./run/vim
 ```
 
-Note the `run/` scripts aren't a strict 1:1 mapping with the install
-environments:
+`run/` maps 1:1 onto the `-e` values (`omarchy3`, `omarchy4`, `mac`,
+`fedora`), with `global` and `vim` as the two deliberate non-env extras.
+`run/omarchy3` and `run/omarchy4` currently start out identical — split
+them apart as real per-version package differences show up.
 
-- `run/omarchy` covers package setup shared by both `omarchy3` and
-  `omarchy4` — there isn't a per-version split yet.
-- `run/mac` corresponds to the `mac` environment.
-- `run/fedora` corresponds to the `fedora` environment.
-- `run/global` and `run/vim` are environment-independent.
+## Directory conventions
+
+Apps whose config differs by environment (`hypr/`, `omarchy/`, `ghostty/`,
+`waybar/`) live under nested per-env subdirectories, e.g. `hypr/omarchy3/`,
+`hypr/omarchy4/`. **An env yaml may only link a leaf directory under an
+app directory — never the app directory itself** (e.g.
+`~/.config/ghostty` → `ghostty/omarchy4`, never → `ghostty`). This is
+what makes switching environments with `--force` a plain symlink-to-symlink
+relink instead of ever writing through a stale symlink into the repo.
+`default/` (e.g. `ghostty/default/`, `waybar/default/`) is the
+subdirectory used by every environment that doesn't have its own override
+— distinct from `install.common.yaml`, which means "all four
+environments," not "unless overridden."
+
+Single-file configs that vary by environment (`zshrc`, `tmux.conf`) use a
+flat `<name>.<env>` sibling instead (e.g. `zshrc.mac`), since there's no
+app directory to nest under.
 
 ## Themes
 
