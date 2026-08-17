@@ -126,6 +126,58 @@ was being written even on a dry-run.
 - [x] 10. Confirm mac-branch diff clean; leave `temporary-mac-config` in place
       (done as part of §3 above)
 
+## 6. Post-review fixes
+
+Added by an external review of the branch after step 10. All 8 items
+implemented and verified against an isolated fake `$HOME` (never the
+real one) or synthetic dirs, per the plan's own testing note.
+
+- [x] 6.1 (highest severity) — `-e force`/`-e common` no longer accepted;
+      validated against `available_envs()` instead of file existence.
+- [x] 6.2 — `--force` now actually reaches `install.common.yaml`'s links.
+      Split `defaults:` out of `install.common.yaml` into
+      `install.defaults.yaml`; compose defaults/force-first, then
+      common, then env.
+- [x] 6.3 — ghostty restructured to `ghostty/default/` +
+      `ghostty/omarchy4/`, both linked as leaf directories (never the
+      `ghostty/` app dir itself), so an env switch is always a
+      symlink-to-symlink relink. Verified: repo's `ghostty/default/config`
+      hash identical before/after the exact omarchy3→omarchy4
+      `--force`-no-`--clean` scenario that used to corrupt it.
+- [x] 6.4 — `--clean` now warns and skips non-writable scan dirs (e.g.
+      `/etc/keyd` without sudo) instead of dying under `set -e`.
+- [x] 6.5 — `-e` as the final CLI arg now errors with usage instead of
+      dying silently on a failed `shift 2`.
+- [x] 6.6 — dotbot's exit code is now captured explicitly: failure
+      (e.g. keyd without sudo) prints a clear message and exits without
+      touching `.installed-env`; success chowns `.installed-env` to
+      `$SUDO_USER` when run via sudo, and prints a `run/<env>` follow-up.
+- [x] 6.7 — `run/omarchy` → `run/omarchy3`, `run/omarchy4` seeded as a
+      copy. `run/` now maps 1:1 onto `-e` values. README updated to
+      match (real filenames, removed the now-inaccurate mismatch
+      paragraph, documented the leaf-directory-only invariant).
+- [x] 6.8 — same `default/` treatment for `waybar/` (`waybar/default/`,
+      alongside the existing `waybar/fedora/`). `lazygit/config.yml` /
+      `lazygit.mac/config.yml` deliberately left as flat files (§3's
+      convention already covers single-file configs; not "half-and-half").
+
+## Rollout additions (11-15)
+- [x] 11. Applied 6.1 + 6.2 together; re-verified via fake-`$HOME` real
+      (non-dry-run) installs — `-e force`/`-e common` rejected, and
+      `--force` now correctly replaces a real `~/.config/ohmyposh`
+      while a plain run still blocks on it.
+- [x] 12. Applied 6.3–6.5, 6.7, 6.8; re-ran `dotbot -n` for all four
+      envs — no "Nonexistent target" warnings after the `default/` moves.
+- [x] 13. Applied 6.6 last, after 6.7's `run/<env>` filenames existed.
+- [x] 14. Re-confirmed the switch guard end-to-end against an isolated
+      fake `$HOME`: guard blocks a plain switch, `--force` bypasses it,
+      and `ghostty/default/config`'s hash is unchanged by an
+      omarchy3→omarchy4 `--force`-only switch.
+- [ ] 15. Rollout step 9 (first real run on this box) — **still blocked**,
+      same as before: requires writing into the real `$HOME`, conflicts
+      with this session's "no files outside the repo modified"
+      instruction. Waiting on the user's explicit go-ahead.
+
 ## Notes / deviations from plan
 
 Summary list — full detail is inline under each section above:
