@@ -13,7 +13,7 @@ available_envs() {
     name="$(basename "${f}")"
     name="${name#install.}"
     name="${name%.yaml}"
-    [[ "${name}" == "common" || "${name}" == "force" ]] && continue
+    [[ "${name}" == "common" || "${name}" == "force" || "${name}" == "defaults" ]] && continue
     echo "${name}"
   done
 }
@@ -59,12 +59,12 @@ if [[ -z "${ENV}" ]]; then
   exit 1
 fi
 
-CONFIG="${BASEDIR}/install.${ENV}.yaml"
-if [[ ! -f "${CONFIG}" ]]; then
-  echo "error: unknown environment '${ENV}' (no ${CONFIG})" >&2
+if ! available_envs | grep -qx "${ENV}"; then
+  echo "error: unknown environment '${ENV}'" >&2
   usage >&2
   exit 1
 fi
+CONFIG="${BASEDIR}/install.${ENV}.yaml"
 
 if [[ -f "${ENV_STATE}" ]]; then
   PREV_ENV="$(cat "${ENV_STATE}")"
@@ -111,11 +111,12 @@ cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-DOTBOT_CONFIGS=("${BASEDIR}/install.common.yaml")
 if [[ "${FORCE}" -eq 1 ]]; then
-  DOTBOT_CONFIGS+=("${BASEDIR}/install.force.yaml")
+  DOTBOT_CONFIGS=("${BASEDIR}/install.force.yaml")
+else
+  DOTBOT_CONFIGS=("${BASEDIR}/install.defaults.yaml")
 fi
-DOTBOT_CONFIGS+=("${CONFIG}")
+DOTBOT_CONFIGS+=("${BASEDIR}/install.common.yaml" "${CONFIG}")
 
 echo "=== Running dotbot for environment '${ENV}' ==="
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${DOTBOT_CONFIGS[@]}" "${@}"
