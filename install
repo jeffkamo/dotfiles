@@ -125,7 +125,16 @@ fi
 DOTBOT_CONFIGS+=("${BASEDIR}/install.common.yaml" "${CONFIG}")
 
 echo "=== Running dotbot for environment '${ENV}' ==="
+set +e
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${DOTBOT_CONFIGS[@]}" "${@}"
+DOTBOT_RC=$?
+set -e
+
+if [[ "${DOTBOT_RC}" -ne 0 ]]; then
+  echo "dotbot reported failures — not recording '${ENV}' in .installed-env" >&2
+  echo "(if this was the /etc/keyd link, re-run with sudo)" >&2
+  exit "${DOTBOT_RC}"
+fi
 
 DRY_RUN=0
 for arg in "${@}"; do
@@ -138,4 +147,6 @@ if [[ "${DRY_RUN}" -eq 1 ]]; then
   echo "=== Dry run: not updating ${ENV_STATE} ==="
 else
   echo "${ENV}" > "${ENV_STATE}"
+  [[ -n "${SUDO_USER:-}" ]] && chown "${SUDO_USER}" "${ENV_STATE}"
+  echo "=== Next: sh ./run/${ENV} && sh ./run/global ==="
 fi
