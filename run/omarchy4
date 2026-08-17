@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Firefox
+# Dropbox
+# Keyd
+# zsh
+# cups # for printer daemon, can visit locally at http://localhost:631/
+# brother-hl-l2370dw # my specific printer
+
+# oh-my-zsh
+# Install this for the plugins, like diretories, history, etc.
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# ohmyposh
+curl -s https://ohmyposh.dev/install.sh | bash -s
+
+# Keyboard stuff
+# noto-fonts-cjk (Japanese font)

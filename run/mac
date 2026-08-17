@@ -10,6 +10,7 @@ brew install --cask alt-tab # https://alt-tab-macos.netlify.app/
 brew install sequel-ace # https://sequel-ace.com/
 brew install --cask ghostty # https://formulae.brew.sh/cask/ghostty
 brew install --cask obsidian # https://formulae.brew.sh/cask/obsidian
+brew install worktrunk # https://github.com/max-sixty/worktrunk — provides `wt`, used by zshrc.mac and lazygit.mac/config.yml
 
 echo "=== Installing ripgrep, a dependency of Telescope live-grep ==="
 sudo apt-get install ripgrep

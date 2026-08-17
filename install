@@ -2,17 +2,141 @@
 
 set -e
 
-echo "=== Setting up dotbot configs ==="
-CONFIG="install.conf.yaml"
-DOTBOT_DIR="dotbot"
-
-DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTBOT_DIR="dotbot"
+DOTBOT_BIN="bin/dotbot"
+ENV_STATE="${BASEDIR}/.installed-env"
+
+available_envs() {
+  local f name
+  for f in "${BASEDIR}"/install.*.yaml; do
+    name="$(basename "${f}")"
+    name="${name#install.}"
+    name="${name%.yaml}"
+    echo "${name}"
+  done
+}
+
+usage() {
+  cat <<EOF
+Usage: ./install -e <env> [--clean] [-- <dotbot args>]
+
+  -e, --env ENV   Environment to install (required). One of:
+$(available_envs | sed 's/^/                    /')
+  --clean         Remove this repo's symlinks (under ~, ~/.config,
+                  ~/.tmux/plugins, ~/.zsh/plugins, ~/Library/Application
+                  Support/lazygit, /etc/keyd) before installing. Also
+                  required when switching to a different environment
+                  than the one currently installed (see below).
+  -h, --help      Show this message.
+
+State: the last successfully installed environment is recorded in
+.installed-env. Installing a different environment requires --clean,
+since dotbot's \`clean\` only removes broken symlinks -- a valid symlink
+left over from a previous environment would otherwise be silently
+neither replaced nor removed.
+EOF
+}
+
+ENV=""
+CLEAN=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -e|--env)
+      [[ $# -ge 2 ]] || { echo "error: -e/--env requires a value" >&2; usage >&2; exit 1; }
+      ENV="$2"; shift 2 ;;
+    --clean) CLEAN=1; shift ;;
+    -h|--help) usage; exit 0 ;;
+    *) break ;; # everything else passes through to dotbot
+  esac
+done
+
+if [[ -z "${ENV}" ]]; then
+  echo "error: -e/--env is required" >&2
+  usage >&2
+  exit 1
+fi
+
+if ! available_envs | grep -qx "${ENV}"; then
+  echo "error: unknown environment '${ENV}'" >&2
+  usage >&2
+  exit 1
+fi
+CONFIG="${BASEDIR}/install.${ENV}.yaml"
+
+if [[ -f "${ENV_STATE}" ]]; then
+  PREV_ENV="$(cat "${ENV_STATE}")"
+  if [[ "${PREV_ENV}" != "${ENV}" && "${CLEAN}" -ne 1 ]]; then
+    cat <<EOF >&2
+You are attempting to install for a different environment.
+  Previously installed: ${PREV_ENV}
+  Requested:            ${ENV}
+
+Switching environments leaves stale symlinks behind: dotbot's \`clean\` only
+removes *broken* links, and a link like ~/.config/hypr -> ${PREV_ENV}'s
+source is still valid, so it will neither be replaced nor removed.
+
+If you want to do this, run:
+  ./install --clean -e ${ENV}
+EOF
+    exit 1
+  fi
+fi
+
+clean_repo_symlinks() {
+  local dir entry target
+  for dir in "${HOME}" "${HOME}/.config" "${HOME}/.tmux/plugins" \
+             "${HOME}/.zsh/plugins" "${HOME}/Library/Application Support/lazygit" \
+             /etc/keyd; do
+    [[ -d "${dir}" ]] || continue
+    if [[ ! -w "${dir}" ]]; then
+      echo "warning: skipping ${dir} (not writable — re-run with sudo to clean it)" >&2
+      continue
+    fi
+    for entry in "${dir}"/* "${dir}"/.*; do
+      [[ -L "${entry}" ]] || continue # also skips . and .. and unmatched-glob literals
+      target="$(readlink "${entry}")"
+      case "${target}" in
+        "${BASEDIR}"/*) rm -f "${entry}"; echo "removed ${entry}" ;;
+      esac
+    done
+  done
+}
+
+if [[ "${CLEAN}" -eq 1 ]]; then
+  echo "=== Cleaning existing symlinks into this repo ==="
+  clean_repo_symlinks
+fi
 
 echo "=== Installing dotbot as a git submodule ==="
 cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-echo "=== Run install.conf.yaml ==="
+echo "=== Running dotbot for environment '${ENV}' ==="
+set +e
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+DOTBOT_RC=$?
+set -e
+
+if [[ "${DOTBOT_RC}" -ne 0 ]]; then
+  echo "dotbot reported failures — not recording '${ENV}' in .installed-env" >&2
+  echo "(if this was the /etc/keyd link, re-run with sudo)" >&2
+  exit "${DOTBOT_RC}"
+fi
+
+DRY_RUN=0
+for arg in "${@}"; do
+  case "${arg}" in
+    -n|--dry-run) DRY_RUN=1 ;;
+  esac
+done
+
+if [[ "${DRY_RUN}" -eq 1 ]]; then
+  echo "=== Dry run: not updating ${ENV_STATE} ==="
+else
+  echo "${ENV}" > "${ENV_STATE}"
+  [[ -n "${SUDO_USER:-}" ]] && chown "${SUDO_USER}" "${ENV_STATE}"
+  echo "=== Next: sh ./run/${ENV} && sh ./run/global ==="
+fi

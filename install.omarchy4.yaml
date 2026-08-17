@@ -1,0 +1,28 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+      backup: true
+
+- clean: ['~', '~/.config']
+
+- link:
+    ~/.zshrc:
+    ~/.tmux.conf:
+    ~/.config/ohmyposh:
+    ~/.tmux/plugins/tmux-sensible:
+    ~/.tmux/plugins/tpm:
+    ~/.zsh/plugins/zsh-autocomplete:
+    ~/.config/ghostty:
+      path: ghostty/omarchy4
+    ~/.config/hypr:
+      path: hypr/omarchy4
+    ~/.config/waybar:
+      path: waybar/common
+    ~/.config/omarchy:
+      path: omarchy/omarchy4
+    ~/.config/lazygit/config.yml:
+      path: lazygit/common/config.yml
+    /etc/keyd/default.conf:
+      # This one might have to be run with sudo
+      path: "keyd/default.conf"
