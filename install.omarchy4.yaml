@@ -8,7 +8,8 @@
 
 - link:
     ~/.zshrc:
-    ~/.tmux.conf:
+    ~/.config/tmux/tmux.conf:
+      path: tmux/omarchy4/tmux.conf
     ~/.config/ohmyposh:
     ~/.tmux/plugins/tmux-sensible:
     ~/.tmux/plugins/tpm:
