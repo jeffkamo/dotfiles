@@ -25,6 +25,8 @@
       path: omarchy/omarchy4
     ~/.config/lazygit/config.yml:
       path: lazygit/common/config.yml
+    ~/.config/herdr/config.toml:
+      path: herdr/default/config.toml
     /etc/keyd/default.conf:
       # This one might have to be run with sudo
       path: "keyd/default.conf"
